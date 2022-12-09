@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.repository.databinding.FragmentChatBinding;
+import com.google.firebase.database.DatabaseReference;
 
 import java.util.ArrayList;
 
@@ -19,11 +20,7 @@ public class ChatFragment extends Fragment {
     private FragmentChatBinding binding;
     private ArrayList<Chat> chatList;
     private RecyclerView recyclerView;
-
-    public ChatFragment() {
-        // Required empty public constructor
-    }
-
+    DatabaseReference databaseReferenceSender, databaseReferenceReceiver;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -46,7 +43,7 @@ public class ChatFragment extends Fragment {
     }
 
     private void setAdapter() {
-        recyclerAdapter adapter=new recyclerAdapter(chatList);
+        ChatAdapter adapter=new ChatAdapter(chatList);
         RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());

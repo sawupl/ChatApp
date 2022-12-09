@@ -7,9 +7,6 @@ import android.view.View;
 
 import com.google.firebase.auth.FirebaseAuth;
 
-import dagger.hilt.android.AndroidEntryPoint;
-
-@AndroidEntryPoint
 public class MainActivity extends AppCompatActivity {
 
     @Override

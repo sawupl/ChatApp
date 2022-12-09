@@ -12,10 +12,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyViewHolder> {
+public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyViewHolder> {
 
     private ArrayList<Chat> userList;
-    public recyclerAdapter(ArrayList<Chat> userList){
+    public ChatAdapter(ArrayList<Chat> userList){
         this.userList=userList;
     }
 
@@ -31,13 +31,13 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyView
 
     @NonNull
     @Override
-    public recyclerAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ChatAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView= LayoutInflater.from(parent.getContext()).inflate(R.layout.chats,parent,false);
         return new MyViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull recyclerAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ChatAdapter.MyViewHolder holder, int position) {
         int pikcha=userList.get(position).getAvaResource();
         String name = userList.get(position).getName();
 
