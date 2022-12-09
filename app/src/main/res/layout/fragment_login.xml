@@ -39,23 +39,27 @@
         app:layout_constraintBottom_toTopOf="@id/login"
         android:layout_marginTop="25dp"/>
 
-    <Button
+    <TextView
         android:id="@+id/login"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:text="Войти"
+        android:textSize="30sp"
+        android:textColor="@color/green"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/password"
         app:layout_constraintBottom_toTopOf="@id/ToReg"
         android:layout_marginTop="20dp"/>
 
-    <Button
+    <TextView
         android:id="@+id/ToReg"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
+        android:text="Зарегистрироваться"
+        android:textColor="@color/green"
+        android:textSize="30sp"
         android:layout_marginTop="20dp"
-        android:text="Зарегестрироваться"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/login" />
