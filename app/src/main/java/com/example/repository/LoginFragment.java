@@ -35,7 +35,9 @@ public class LoginFragment extends Fragment {
                         binding.email.getText().toString(),
                         binding.password.getText().toString()
                 ));
-
+        binding.toAd.setOnClickListener(view -> {
+            Navigation.findNavController(getView()).navigate(R.id.action_loginFragment_to_addFragment);
+        });
         return binding.getRoot();
     }
     @Override
@@ -43,7 +45,7 @@ public class LoginFragment extends Fragment {
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null){
-            Navigation.findNavController(getView()).navigate(R.id.action_loginFragment_to_homeFragment);
+            Navigation.findNavController(getView()).navigate(R.id.action_loginFragment_to_chatFragment);
         }
     }
 
@@ -52,7 +54,7 @@ public class LoginFragment extends Fragment {
                 .addOnCompleteListener(requireActivity(), task -> {
                     if (task.isSuccessful()) {
                         System.out.println("log in success");
-                        Navigation.findNavController(getView()).navigate(R.id.action_loginFragment_to_homeFragment);
+                        Navigation.findNavController(getView()).navigate(R.id.action_loginFragment_to_chatFragment);
                     } else {
                         System.out.println("log in failure");
                     }
