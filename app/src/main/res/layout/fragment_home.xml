@@ -31,6 +31,17 @@
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="10dp"/>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Темы"
+            android:textColor="@color/blue"
+            android:textSize="26sp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:gravity="center"/>
 
     </RelativeLayout>
 
@@ -38,6 +49,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="none"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
         android:layout_marginTop="70dp">
 
         <LinearLayout
@@ -47,13 +60,22 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="70dp">
 
                 <ImageView
                     android:id="@+id/kotl"
-                    android:layout_width="210dp"
-                    android:layout_height="65dp"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
                     android:background="@drawable/kotl"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="80dp"
+                    android:gravity="center_vertical"
+                    android:textSize="26sp"
+                    android:textColor="@color/white"
+                    android:text="Kotlin" />
 
                 <ImageButton
                     android:layout_width="40dp"
@@ -67,14 +89,23 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp">
+                android:layout_height="70dp"
+                android:layout_marginTop="20dp">
 
                 <ImageView
-                    android:id="@+id/kotl2"
-                    android:layout_width="210dp"
-                    android:layout_height="65dp"
-                    android:background="@drawable/kotl"/>
+                    android:id="@+id/java"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:background="@drawable/java"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="80dp"
+                    android:gravity="center_vertical"
+                    android:textSize="26sp"
+                    android:textColor="@color/white"
+                    android:text="Java" />
 
                 <ImageButton
                     android:layout_width="40dp"
@@ -88,14 +119,25 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp">
+                android:layout_height="70dp"
+                android:layout_marginTop="20dp">
 
                 <ImageView
-                    android:id="@+id/kotl3"
-                    android:layout_width="210dp"
-                    android:layout_height="65dp"
-                    android:background="@drawable/kotl"/>
+                    android:id="@+id/pyth"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/python" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="80dp"
+                    android:gravity="center_vertical"
+                    android:textSize="26sp"
+                    android:textColor="@color/white"
+                    android:text="Python" />
 
                 <ImageButton
                     android:layout_width="40dp"
@@ -109,55 +151,23 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp">
+                android:layout_height="70dp"
+                android:layout_marginTop="20dp">
 
                 <ImageView
-                    android:id="@+id/kotl4"
-                    android:layout_width="210dp"
-                    android:layout_height="65dp"
-                    android:background="@drawable/kotl"/>
-                <ImageButton
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:background="@drawable/vopr"
-                    android:layout_marginEnd="10dp" />
+                    android:id="@+id/unity"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:background="@drawable/unity"/>
 
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp">
-
-                <ImageView
-                    android:id="@+id/kotl5"
-                    android:layout_width="210dp"
-                    android:layout_height="65dp"
-                    android:background="@drawable/kotl"/>
-
-                <ImageButton
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:background="@drawable/vopr"
-                    android:layout_marginEnd="10dp" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp">
-
-                <ImageView
-                    android:id="@+id/kotl6"
-                    android:layout_width="210dp"
-                    android:layout_height="65dp"
-                    android:background="@drawable/kotl"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="80dp"
+                    android:gravity="center_vertical"
+                    android:textSize="26sp"
+                    android:textColor="@color/white"
+                    android:text="Unity" />
 
                 <ImageButton
                     android:layout_width="40dp"
@@ -171,54 +181,25 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp">
+                android:layout_height="70dp"
+                android:layout_marginTop="20dp">
 
                 <ImageView
-                    android:id="@+id/kotl7"
-                    android:layout_width="210dp"
-                    android:layout_height="65dp"
-                    android:background="@drawable/kotl"/>
-                <ImageButton
-                    android:layout_width="40dp"
+                    android:id="@+id/onec"
+                    android:layout_width="60dp"
                     android:layout_height="40dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:background="@drawable/vopr"
-                    android:layout_marginEnd="10dp" />
+                    android:layout_marginTop="15dp"
+                    android:layout_marginStart="5dp"
+                    android:background="@drawable/onec"/>
 
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp">
-
-                <ImageView
-                    android:id="@+id/kotl8"
-                    android:layout_width="210dp"
-                    android:layout_height="65dp"
-                    android:background="@drawable/kotl"/>
-                <ImageButton
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:background="@drawable/vopr"
-                    android:layout_marginEnd="10dp" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp">
-
-                <ImageView
-                    android:id="@+id/kotl9"
-                    android:layout_width="210dp"
-                    android:layout_height="65dp"
-                    android:background="@drawable/kotl"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="80dp"
+                    android:gravity="center_vertical"
+                    android:textSize="26sp"
+                    android:textColor="@color/white"
+                    android:text="1C" />
 
                 <ImageButton
                     android:layout_width="40dp"
@@ -232,14 +213,150 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp">
+                android:layout_height="70dp"
+                android:layout_marginTop="20dp">
 
                 <ImageView
-                    android:id="@+id/kotl10"
-                    android:layout_width="210dp"
-                    android:layout_height="65dp"
-                    android:background="@drawable/kotl"/>
+                    android:id="@+id/php"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:background="@drawable/php"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="80dp"
+                    android:gravity="center_vertical"
+                    android:textSize="26sp"
+                    android:textColor="@color/white"
+                    android:text="PHP" />
+
+                <ImageButton
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/vopr"
+                    android:layout_marginEnd="10dp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginTop="20dp">
+
+                <ImageView
+                    android:id="@+id/uxui"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginStart="5dp"
+                    android:background="@drawable/uxui"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="80dp"
+                    android:gravity="center_vertical"
+                    android:textSize="26sp"
+                    android:textColor="@color/white"
+                    android:text="UX/UI" />
+
+                <ImageButton
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/vopr"
+                    android:layout_marginEnd="10dp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginTop="20dp">
+
+                <ImageView
+                    android:id="@+id/jscript"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/jscript"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="80dp"
+                    android:gravity="center_vertical"
+                    android:textSize="26sp"
+                    android:textColor="@color/white"
+                    android:text="JavaScript" />
+
+                <ImageButton
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/vopr"
+                    android:layout_marginEnd="10dp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginTop="20dp">
+
+                <ImageView
+                    android:id="@+id/go"
+                    android:layout_width="60dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginStart="5dp"
+                    android:background="@drawable/go"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="80dp"
+                    android:gravity="center_vertical"
+                    android:textSize="26sp"
+                    android:textColor="@color/white"
+                    android:text="Go" />
+
+                <ImageButton
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/vopr"
+                    android:layout_marginEnd="10dp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginTop="20dp">
+
+                <ImageView
+                    android:id="@+id/chess"
+                    android:layout_width="50dp"
+                    android:layout_height="70dp"
+                    android:layout_marginStart="10dp"
+                    android:background="@drawable/chess"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="80dp"
+                    android:gravity="center_vertical"
+                    android:textSize="26sp"
+                    android:textColor="@color/white"
+                    android:text="Chess" />
 
                 <ImageButton
                     android:layout_width="40dp"

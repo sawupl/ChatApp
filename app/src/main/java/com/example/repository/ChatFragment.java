@@ -54,7 +54,7 @@ public class ChatFragment extends Fragment {
     }
 
     private void setMessageInfo() {
-        chatList.add(new Chat("Бот",R.drawable.ic_baseline_airline_seat_flat_angled_24));
-        chatList.add(new Chat("Служба поддержки",R.drawable.ic_baseline_arrow_back_24));
+        chatList.add(new Chat("Бот",R.drawable.andr));
+        chatList.add(new Chat("Служба поддержки",R.drawable.back));
     }
 }

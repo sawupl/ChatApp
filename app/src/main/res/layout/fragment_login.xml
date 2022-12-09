@@ -1,11 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".LoginFragment"
-    android:background="@color/grey">
+    android:background="@color/grey"
+    tools:context=".LoginFragment">
+
+    <RelativeLayout
+        android:id="@+id/panel"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/dgrey">
+
+        <ImageView
+            android:id="@+id/ToReg"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:src="@drawable/reg"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true" />
+
+        <ImageView
+            android:id="@+id/login"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/done"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Вход"
+            android:textColor="@color/blue"
+            android:textSize="26sp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:gravity="center"/>
+
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_width="239dp"
+        android:layout_height="261dp"
+        android:layout_marginTop="92dp"
+        android:layout_marginStart="-70dp"
+        android:rotation="90"
+        android:src="@drawable/andr"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:layout_width="239dp"
+        android:layout_height="261dp"
+        android:layout_marginTop="516dp"
+        android:src="@drawable/manuf"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/email"
@@ -13,15 +72,15 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Введите email"
-        android:textSize="22sp"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white"
         android:inputType="textEmailAddress"
+        android:textColor="@color/white"
+        android:textColorHint="@color/whitepros"
+        android:textSize="22sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginBottom="80dp"/>
+        app:layout_constraintVertical_bias="0.429" />
 
     <EditText
         android:id="@+id/password"
@@ -29,48 +88,14 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Введите пароль"
-        android:textSize="22sp"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white"
         android:inputType="textPassword"
+        android:textColor="@color/white"
+        android:textColorHint="@color/whitepros"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/email"
-        app:layout_constraintBottom_toTopOf="@id/login"
-        android:layout_marginTop="25dp"/>
-
-    <TextView
-        android:id="@+id/login"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:text="Войти"
-        android:textSize="30sp"
-        android:textColor="@color/lgreen"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/password"
-        app:layout_constraintBottom_toTopOf="@id/ToReg"
-        android:layout_marginTop="20dp"/>
-
-    <TextView
-        android:id="@+id/ToReg"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:text="Зарегистрироваться"
-        android:textColor="@color/lgreen"
-        android:textSize="30sp"
-        android:layout_marginTop="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/login" />
-
-    <Button
-        android:id="@+id/toAd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="add"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
+        app:layout_constraintTop_toBottomOf="@+id/email"
+        app:layout_constraintVertical_bias="0.209" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
