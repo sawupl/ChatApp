@@ -35,9 +35,6 @@ public class LoginFragment extends Fragment {
                         binding.email.getText().toString(),
                         binding.password.getText().toString()
                 ));
-        binding.toAd.setOnClickListener(view -> {
-            Navigation.findNavController(getView()).navigate(R.id.action_loginFragment_to_addFragment);
-        });
         return binding.getRoot();
     }
     @Override

@@ -127,4 +127,22 @@
         android:src="@drawable/rosetka"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent" />
+
+    <ImageView
+        android:layout_width="192dp"
+        android:layout_height="173dp"
+        android:layout_marginStart="88dp"
+        android:layout_marginTop="68dp"
+        android:src="@drawable/monitor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:layout_width="114dp"
+        android:layout_height="75dp"
+        android:layout_marginTop="164dp"
+        android:layout_marginEnd="60dp"
+        android:src="@drawable/mouse"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
