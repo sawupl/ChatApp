@@ -10,12 +10,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 
-import com.example.repository.databinding.FragmentAddBinding;
 import com.example.repository.databinding.FragmentChatBinding;
-import com.example.repository.databinding.FragmentLoginBinding;
 
 import java.util.ArrayList;
 

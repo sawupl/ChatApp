@@ -3,7 +3,6 @@ package com.example.repository;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -41,6 +40,7 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyView
     public void onBindViewHolder(@NonNull recyclerAdapter.MyViewHolder holder, int position) {
         int pikcha=userList.get(position).getAvaResource();
         String name = userList.get(position).getName();
+
         holder.ava.setImageResource(pikcha);
         holder.nameTxt.setText(name);
 
@@ -57,6 +57,4 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyView
     public int getItemCount() {
         return userList.size();
     }
-
-
 }
