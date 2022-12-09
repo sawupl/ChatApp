@@ -82,8 +82,9 @@
                     android:layout_height="40dp"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
+                    android:layout_marginEnd="10dp"
                     android:background="@drawable/vopr"
-                    android:layout_marginEnd="10dp" />
+                    android:onClick="onMyButtonClick" />
 
             </RelativeLayout>
 
@@ -112,8 +113,9 @@
                     android:layout_height="40dp"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
+                    android:layout_marginEnd="10dp"
                     android:background="@drawable/vopr"
-                    android:layout_marginEnd="10dp" />
+                    android:onClick="onMyButtonClick" />
 
             </RelativeLayout>
 
@@ -144,8 +146,9 @@
                     android:layout_height="40dp"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
+                    android:layout_marginEnd="10dp"
                     android:background="@drawable/vopr"
-                    android:layout_marginEnd="10dp" />
+                    android:onClick="onMyButtonClick" />
 
             </RelativeLayout>
 
@@ -174,8 +177,9 @@
                     android:layout_height="40dp"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
+                    android:layout_marginEnd="10dp"
                     android:background="@drawable/vopr"
-                    android:layout_marginEnd="10dp" />
+                    android:onClick="onMyButtonClick" />
 
             </RelativeLayout>
 
@@ -206,8 +210,9 @@
                     android:layout_height="40dp"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
+                    android:layout_marginEnd="10dp"
                     android:background="@drawable/vopr"
-                    android:layout_marginEnd="10dp" />
+                    android:onClick="onMyButtonClick" />
 
             </RelativeLayout>
 
@@ -238,8 +243,9 @@
                     android:layout_height="40dp"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
+                    android:layout_marginEnd="10dp"
                     android:background="@drawable/vopr"
-                    android:layout_marginEnd="10dp" />
+                    android:onClick="onMyButtonClick" />
 
             </RelativeLayout>
 
@@ -270,8 +276,9 @@
                     android:layout_height="40dp"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
+                    android:layout_marginEnd="10dp"
                     android:background="@drawable/vopr"
-                    android:layout_marginEnd="10dp" />
+                    android:onClick="onMyButtonClick" />
 
             </RelativeLayout>
 
@@ -302,8 +309,9 @@
                     android:layout_height="40dp"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
+                    android:layout_marginEnd="10dp"
                     android:background="@drawable/vopr"
-                    android:layout_marginEnd="10dp" />
+                    android:onClick="onMyButtonClick" />
 
             </RelativeLayout>
 
@@ -334,8 +342,9 @@
                     android:layout_height="40dp"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
+                    android:layout_marginEnd="10dp"
                     android:background="@drawable/vopr"
-                    android:layout_marginEnd="10dp" />
+                    android:onClick="onMyButtonClick" />
 
             </RelativeLayout>
 
@@ -365,8 +374,9 @@
                     android:layout_height="40dp"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
+                    android:layout_marginEnd="10dp"
                     android:background="@drawable/vopr"
-                    android:layout_marginEnd="10dp"/>
+                    android:onClick="onMyButtonClick" />
 
             </RelativeLayout>
 

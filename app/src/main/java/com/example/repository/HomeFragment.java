@@ -8,6 +8,7 @@ import androidx.navigation.Navigation;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.repository.databinding.FragmentHomeBinding;
 import com.example.repository.databinding.FragmentLoginBinding;
@@ -35,6 +36,12 @@ public class HomeFragment extends Fragment {
             mAuth.signOut();
             Navigation.findNavController(getView()).navigate(R.id.action_homeFragment_to_chatFragment);
         });
+
         return binding.getRoot();
+    }
+
+
+    public void onMyButtonClick(View view) {
+        System.out.println("-----------------------------------------");
     }
 }
