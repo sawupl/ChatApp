@@ -218,8 +218,10 @@
 
                 <ImageView
                     android:id="@+id/php"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginStart="5dp"
                     android:background="@drawable/php"/>
 
                 <TextView
