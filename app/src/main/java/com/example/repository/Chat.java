@@ -1,10 +1,10 @@
 package com.example.repository;
 
-public class Message {
+public class Chat {
     private String name;
     private int avaResource;
 
-    public Message(String name,int avaResource){
+    public Chat(String name,int avaResource){
         this.name=name;
         this.avaResource=avaResource;
     }

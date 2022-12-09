@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 public class ChatFragment extends Fragment {
     private FragmentChatBinding binding;
-    private ArrayList<Message> messageList;
+    private ArrayList<Chat> chatList;
     private RecyclerView recyclerView;
 
     public ChatFragment() {
@@ -37,7 +37,7 @@ public class ChatFragment extends Fragment {
 
         recyclerView=binding.list;
 
-        messageList= new ArrayList<>();
+        chatList= new ArrayList<>();
         setMessageInfo();
         setAdapter();
 
@@ -46,7 +46,7 @@ public class ChatFragment extends Fragment {
     }
 
     private void setAdapter() {
-        recyclerAdapter adapter=new recyclerAdapter(messageList);
+        recyclerAdapter adapter=new recyclerAdapter(chatList);
         RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -54,7 +54,7 @@ public class ChatFragment extends Fragment {
     }
 
     private void setMessageInfo() {
-        messageList.add(new Message("Бот",R.drawable.ic_baseline_airline_seat_flat_angled_24));
-        messageList.add(new Message("Служба поддержки",R.drawable.ic_baseline_arrow_back_24));
+        chatList.add(new Chat("Бот",R.drawable.ic_baseline_airline_seat_flat_angled_24));
+        chatList.add(new Chat("Служба поддержки",R.drawable.ic_baseline_arrow_back_24));
     }
 }

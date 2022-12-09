@@ -14,8 +14,8 @@ import java.util.ArrayList;
 
 public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyViewHolder> {
 
-    private ArrayList<Message> userList;
-    public recyclerAdapter(ArrayList<Message> userList){
+    private ArrayList<Chat> userList;
+    public recyclerAdapter(ArrayList<Chat> userList){
         this.userList=userList;
     }
 

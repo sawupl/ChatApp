@@ -45,7 +45,7 @@ public class LoginFragment extends Fragment {
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null){
-            Navigation.findNavController(getView()).navigate(R.id.action_loginFragment_to_chatFragment);
+            Navigation.findNavController(getView()).navigate(R.id.action_loginFragment_to_homeFragment);
         }
     }
 
@@ -54,7 +54,7 @@ public class LoginFragment extends Fragment {
                 .addOnCompleteListener(requireActivity(), task -> {
                     if (task.isSuccessful()) {
                         System.out.println("log in success");
-                        Navigation.findNavController(getView()).navigate(R.id.action_loginFragment_to_chatFragment);
+                        Navigation.findNavController(getView()).navigate(R.id.action_loginFragment_to_homeFragment);
                     } else {
                         System.out.println("log in failure");
                     }

@@ -31,6 +31,10 @@ public class HomeFragment extends Fragment {
             mAuth.signOut();
             Navigation.findNavController(getView()).navigate(R.id.action_homeFragment_to_loginFragment);
         });
+        binding.chatBtn.setOnClickListener(view -> {
+            mAuth.signOut();
+            Navigation.findNavController(getView()).navigate(R.id.action_homeFragment_to_chatFragment);
+        });
         return binding.getRoot();
     }
 }
