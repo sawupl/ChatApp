@@ -50,17 +50,17 @@
 
 
     <EditText
-        android:id="@+id/surname"
+        android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="4dp"
         android:ems="10"
-        android:hint="Введите фамилию"
+        android:hint="Введите имя"
         android:inputType="textPersonName"
         android:textColor="@color/white"
         android:textColorHint="@color/whitepros"
         android:textSize="22sp"
-        app:layout_constraintBottom_toTopOf="@+id/email"
+        app:layout_constraintBottom_toTopOf="@+id/surname"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -68,7 +68,7 @@
         android:id="@+id/password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="12dp"
         android:ems="10"
         android:hint="Введите пароль"
         android:inputType="textPassword"
@@ -79,20 +79,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/email" />
 
-    <EditText
-        android:id="@+id/name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        android:ems="10"
-        android:hint="Введите имя"
-        android:inputType="textPersonName"
-        android:textColor="@color/white"
-        android:textColorHint="@color/whitepros"
-        android:textSize="22sp"
-        app:layout_constraintBottom_toTopOf="@+id/surname"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+    <ImageView
+        android:layout_width="580dp"
+        android:layout_height="256dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="52dp"
+        android:src="@drawable/monitor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/email"
@@ -109,40 +103,30 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.651" />
+        app:layout_constraintVertical_bias="0.668" />
+
+    <EditText
+        android:id="@+id/surname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:ems="10"
+        android:hint="Введите фамилию"
+        android:inputType="textPersonName"
+        android:textColor="@color/white"
+        android:textColorHint="@color/whitepros"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toTopOf="@+id/email"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
-        android:layout_width="197dp"
-        android:layout_height="175dp"
-        android:layout_marginStart="-40dp"
+        android:layout_width="252dp"
+        android:layout_height="216dp"
+        android:layout_marginStart="-50dp"
         android:rotation="90"
         android:src="@drawable/pow"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <ImageView
-        android:layout_width="197dp"
-        android:layout_height="175dp"
-        android:layout_marginStart="-40dp"
-        android:src="@drawable/rosetka"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
-
-    <ImageView
-        android:layout_width="192dp"
-        android:layout_height="173dp"
-        android:layout_marginStart="88dp"
-        android:layout_marginTop="68dp"
-        android:src="@drawable/monitor"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:layout_width="114dp"
-        android:layout_height="75dp"
-        android:layout_marginTop="164dp"
-        android:layout_marginEnd="60dp"
-        android:src="@drawable/mouse"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
