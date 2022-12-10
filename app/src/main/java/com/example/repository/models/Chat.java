@@ -1,4 +1,4 @@
-package com.example.repository;
+package com.example.repository.models;
 
 public class Chat {
     private String name;

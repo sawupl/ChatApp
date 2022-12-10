@@ -1,4 +1,4 @@
-package com.example.repository;
+package com.example.repository.screens.message;
 
 import android.os.Bundle;
 
@@ -13,8 +13,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.repository.databinding.FragmentChatBinding;
+import com.example.repository.models.Message;
 import com.example.repository.databinding.FragmentMessageBinding;
+import com.example.repository.models.KeyWord;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -23,8 +24,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.UUID;
 
 
 public class MessageFragment extends Fragment {
@@ -49,7 +48,7 @@ public class MessageFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentMessageBinding.inflate(getLayoutInflater(), container, false);
 //        if (!receiverId.equals("bot")) {
-            String receiverId = "f6x0jJ3hU6faVi5JdvC2XtL4Dm43";
+            String receiverId = "GSVpkfL55OgxEiqGc3nUtnUVirq2";
             String chatId = receiverId;
             databaseReferenceSender = FirebaseDatabase.getInstance().getReference("users").child(mAuth.getUid()).child("chats").child(chatId);
             databaseReferenceReceiver = FirebaseDatabase.getInstance().getReference("users").child(receiverId).child("chats").child(chatId);

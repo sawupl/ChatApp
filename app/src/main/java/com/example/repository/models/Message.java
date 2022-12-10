@@ -1,4 +1,4 @@
-package com.example.repository;
+package com.example.repository.models;
 
 import com.google.firebase.database.ServerValue;
 

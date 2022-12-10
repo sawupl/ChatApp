@@ -1,4 +1,4 @@
-package com.example.repository;
+package com.example.repository.screens.chat;
 
 import android.os.Bundle;
 
@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.repository.databinding.FragmentChatBinding;
+import com.example.repository.models.Chat;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;

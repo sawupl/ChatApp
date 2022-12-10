@@ -1,4 +1,4 @@
-package com.example.repository;
+package com.example.repository.screens.chat;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +9,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.repository.R;
+import com.example.repository.models.Chat;
 
 import java.util.ArrayList;
 

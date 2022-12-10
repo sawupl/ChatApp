@@ -1,4 +1,4 @@
-package com.example.repository;
+package com.example.repository.screens.registrarion;
 
 import android.os.Bundle;
 
@@ -9,7 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.repository.R;
 import com.example.repository.databinding.FragmentRegistrationBinding;
+import com.example.repository.models.Message;
+import com.example.repository.models.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;

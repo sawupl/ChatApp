@@ -1,11 +1,12 @@
-package com.example.repository;
+package com.example.repository.screens;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
 
-import com.google.firebase.auth.FirebaseAuth;
+import com.example.repository.screens.dialog.InfoDialog;
+import com.example.repository.R;
 
 public class MainActivity extends AppCompatActivity {
 

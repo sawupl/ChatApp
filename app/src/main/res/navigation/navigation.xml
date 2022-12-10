@@ -6,7 +6,7 @@
     app:startDestination="@id/loginFragment">
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.example.repository.LoginFragment"
+        android:name="com.example.repository.screens.login.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
@@ -18,7 +18,7 @@
     </fragment>
     <fragment
         android:id="@+id/registrationFragment"
-        android:name="com.example.repository.RegistrationFragment"
+        android:name="com.example.repository.screens.registrarion.RegistrationFragment"
         android:label="fragment_registration"
         tools:layout="@layout/fragment_registration" >
         <action
@@ -30,7 +30,7 @@
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.repository.HomeFragment"
+        android:name="com.example.repository.screens.home.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
@@ -43,7 +43,7 @@
     </fragment>
     <fragment
         android:id="@+id/chatFragment"
-        android:name="com.example.repository.ChatFragment"
+        android:name="com.example.repository.screens.chat.ChatFragment"
         android:label="fragment_chat"
         tools:layout="@layout/fragment_chat" >
         <action
@@ -52,7 +52,7 @@
     </fragment>
     <fragment
         android:id="@+id/messageFragment"
-        android:name="com.example.repository.MessageFragment"
+        android:name="com.example.repository.screens.message.MessageFragment"
         android:label="fragment_message"
         tools:layout="@layout/fragment_message" />
 </navigation>

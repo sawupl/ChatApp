@@ -1,10 +1,12 @@
-package com.example.repository;
+package com.example.repository.screens.dialog;
 
 import android.app.Activity;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.view.Window;
 import android.widget.Button;
+
+import com.example.repository.R;
 
 public class InfoDialog extends Dialog {
 
