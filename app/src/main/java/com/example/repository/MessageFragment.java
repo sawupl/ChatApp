@@ -108,21 +108,25 @@ public class MessageFragment extends Fragment {
         String[] words = message.split("\\s");
 
         for (String word : words) {
-            mDatabase.child("bot").child(word).get().addOnCompleteListener(task -> {
-                if (!task.isSuccessful()) {
-                    System.out.println("Error getting data");
-                } else {
-                    KeyWord keyWord1 = task.getResult().getValue(KeyWord.class);
-                    if (keyWord1 != null) {
-                        Message message2=new Message("bot",keyWord1.answer);
-                        messageAdapter.add(message2);
-                        databaseReferenceSender
-                                .child(String.valueOf(message2.getId()))
-                                .setValue(message2);
-                    }
+            try {
+                mDatabase.child("bot").child(word).get().addOnCompleteListener(task -> {
+                    if (!task.isSuccessful()) {
+                        System.out.println("Error getting data");
+                    } else {
+                        KeyWord keyWord1 = task.getResult().getValue(KeyWord.class);
+                        if (keyWord1 != null) {
+                            Message message2=new Message("bot",keyWord1.answer);
+                            messageAdapter.add(message2);
+                            databaseReferenceSender
+                                    .child(String.valueOf(message2.getId()))
+                                    .setValue(message2);
+                        }
 
-                }
-            });
+                    }
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         //databaseReferenceReceiver
         //        .child(message_id)
