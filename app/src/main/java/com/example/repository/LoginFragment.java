@@ -30,11 +30,13 @@ public class LoginFragment extends Fragment {
         binding.ToReg.setOnClickListener(v ->
                 Navigation.findNavController(getView()).navigate(R.id.action_loginFragment_to_registrationFragment)
         );
-        binding.login.setOnClickListener(v ->
-                signIn(
-                        binding.email.getText().toString(),
-                        binding.password.getText().toString()
-                ));
+        if(!binding.email.getText().toString().equals("") && !binding.password.getText().toString().equals("")){
+            binding.login.setOnClickListener(v ->
+                    signIn(
+                            binding.email.getText().toString(),
+                            binding.password.getText().toString()
+                    ));
+        }
         return binding.getRoot();
     }
     @Override
