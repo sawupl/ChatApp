@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -89,6 +90,9 @@ public class MessageFragment extends Fragment {
                 sendMessage(message);
                 binding.input.setText("");
             }
+        });
+        binding.back.setOnClickListener(v -> {
+            Navigation.findNavController(getView()).popBackStack();
         });
 
 
