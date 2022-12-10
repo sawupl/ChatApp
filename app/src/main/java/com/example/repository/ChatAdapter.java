@@ -14,9 +14,9 @@ import java.util.ArrayList;
 
 public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyViewHolder> {
 
-    private ArrayList<Chat> userList;
-    public ChatAdapter(ArrayList<Chat> userList){
-        this.userList=userList;
+    private ArrayList<Chat> chatList;
+    public ChatAdapter(ArrayList<Chat> chatList){
+        this.chatList=chatList;
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
@@ -38,10 +38,10 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull ChatAdapter.MyViewHolder holder, int position) {
-        int pikcha=userList.get(position).getAvaResource();
-        String name = userList.get(position).getName();
+//        int pikcha=userList.get(position).getAvaResource();
+        String name = chatList.get(position).getName();
 
-        holder.ava.setImageResource(pikcha);
+//        holder.ava.setImageResource(pikcha);
         holder.nameTxt.setText(name);
 
 
@@ -55,6 +55,18 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyViewHolder> 
 
     @Override
     public int getItemCount() {
-        return userList.size();
+        return chatList.size();
+    }
+
+    public void add(Chat chat) {
+        chatList.add(chat);
+        notifyDataSetChanged();
+    }
+
+    public void clear() {
+        if(chatList!=null){
+            chatList.clear();
+            notifyDataSetChanged();
+        }
     }
 }
