@@ -15,9 +15,6 @@
         <action
             android:id="@+id/action_loginFragment_to_registrationFragment"
             app:destination="@id/registrationFragment" />
-        <action
-            android:id="@+id/action_loginFragment_to_addFragment"
-            app:destination="@id/addFragment" />
     </fragment>
     <fragment
         android:id="@+id/registrationFragment"
@@ -44,11 +41,6 @@
             android:id="@+id/action_homeFragment_to_chatFragment"
             app:destination="@id/chatFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/addFragment"
-        android:name="com.example.repository.AddFragment"
-        android:label="fragment_add"
-        tools:layout="@layout/fragment_add" />
     <fragment
         android:id="@+id/chatFragment"
         android:name="com.example.repository.ChatFragment"
