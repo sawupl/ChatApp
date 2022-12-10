@@ -38,9 +38,4 @@ public class HomeFragment extends Fragment {
 
         return binding.getRoot();
     }
-
-
-    public void onMyButtonClick(View view) {
-        System.out.println("-----------------------------------------");
-    }
 }

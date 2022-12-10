@@ -3,6 +3,7 @@ package com.example.repository;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -37,7 +38,9 @@ public class ChatFragment extends Fragment {
         chatList= new ArrayList<>();
         setMessageInfo();
         setAdapter();
-
+        binding.backToHome.setOnClickListener(view -> {
+            Navigation.findNavController(getView()).popBackStack();
+        });
 
         return binding.getRoot();
     }
