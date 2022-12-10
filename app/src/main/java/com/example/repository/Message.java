@@ -1,25 +1,27 @@
 package com.example.repository;
 
+import com.google.firebase.database.ServerValue;
+
 public class Message {
-    private String Id;
+    private long id = System.currentTimeMillis();
     private String sender;
     private String message;
 
-    public Message(String id, String sender, String message) {
-        Id = id;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public Message(String sender, String message) {
         this.sender = sender;
         this.message = message;
     }
 
     public Message() {
-    }
-
-    public String getId() {
-        return Id;
-    }
-
-    public void setId(String id) {
-        Id = id;
     }
 
     public String getSender() {

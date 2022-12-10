@@ -96,14 +96,12 @@ public class MessageFragment extends Fragment {
     }
 
     private void sendMessage(String message) {
-        String message_id = UUID.randomUUID().toString();
-        String message_id2 = UUID.randomUUID().toString();
-        Message message1 = new Message(message_id, mAuth.getCurrentUser().getEmail(), message);
+        Message message1 = new Message(mAuth.getCurrentUser().getEmail(), message);
         KeyWord keyWord=new KeyWord();
 
         messageAdapter.add(message1);
         databaseReferenceSender
-                .child(message_id)
+                .child(String.valueOf(message1.getId()))
                 .setValue(message1);
 
 
@@ -116,10 +114,10 @@ public class MessageFragment extends Fragment {
                 } else {
                     KeyWord keyWord1 = task.getResult().getValue(KeyWord.class);
                     if (keyWord1 != null) {
-                        Message message2=new Message(message_id2,"bot",keyWord1.answer);
+                        Message message2=new Message("bot",keyWord1.answer);
                         messageAdapter.add(message2);
                         databaseReferenceSender
-                                .child(message_id2)
+                                .child(String.valueOf(message2.getId()))
                                 .setValue(message2);
                     }
 
