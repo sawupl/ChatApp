@@ -5,6 +5,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/grey">
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/rocket"/>
+
     <RelativeLayout
         android:id="@+id/panel"
         android:layout_width="match_parent"
@@ -25,14 +30,18 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="-4dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="0dp"
+            android:gravity="center"
             android:text="Чат"
             android:textColor="@color/blue"
-            android:textSize="26sp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:gravity="center"/>
+            android:textSize="26sp" />
 
     </RelativeLayout>
 
@@ -59,8 +68,9 @@
                 android:layout_marginStart="16dp"
                 android:layout_width="300dp"
                 android:layout_height="50dp"
+                android:hint="Введите сообщение"
                 android:textColor="@color/white"
-                android:textColorHint="@color/white"
+                android:textColorHint="@color/whitepros"
                 android:background="@color/grey"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentStart="true"/>
