@@ -56,7 +56,9 @@ public class RegistrationFragment extends Fragment {
     }
     private void writeNewUser(String surname,String name,String userId) {
         User user = new User(name, surname);
+        Chat chat = new Chat("bot");
 
         mDatabase.child("users").child(userId).setValue(user);
+        mDatabase.child("users").child(userId).child("chats").setValue(chat);
     }
 }
