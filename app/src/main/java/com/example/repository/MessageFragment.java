@@ -49,7 +49,7 @@ public class MessageFragment extends Fragment {
         binding = FragmentMessageBinding.inflate(getLayoutInflater(), container, false);
 //        if (!receiverId.equals("bot")) {
             String receiverId = "f6x0jJ3hU6faVi5JdvC2XtL4Dm43";
-            String chatId = receiverId+mAuth.getUid();
+            String chatId = String.valueOf(System.currentTimeMillis());
             databaseReferenceSender = FirebaseDatabase.getInstance().getReference("users").child(mAuth.getUid()).child("chats").child(chatId);
             databaseReferenceReceiver = FirebaseDatabase.getInstance().getReference("users").child(receiverId).child("chats").child(chatId);
 //        }
