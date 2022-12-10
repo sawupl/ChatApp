@@ -50,7 +50,7 @@ public class MessageFragment extends Fragment {
         binding = FragmentMessageBinding.inflate(getLayoutInflater(), container, false);
 //        if (!receiverId.equals("bot")) {
             String receiverId = "f6x0jJ3hU6faVi5JdvC2XtL4Dm43";
-            String chatId = receiverId+mAuth.getUid();
+            String chatId = receiverId;
             databaseReferenceSender = FirebaseDatabase.getInstance().getReference("users").child(mAuth.getUid()).child("chats").child(chatId);
             databaseReferenceReceiver = FirebaseDatabase.getInstance().getReference("users").child(receiverId).child("chats").child(chatId);
 //        }
@@ -84,6 +84,24 @@ public class MessageFragment extends Fragment {
 
             }
         });
+
+        databaseReferenceReceiver.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                messageAdapter.clear();
+                for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
+                    Message message = dataSnapshot.getValue(Message.class);
+                    messageAdapter.add(message);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
         binding.send.setOnClickListener(v -> {
             String message = binding.input.getText().toString();
             if (message.trim().length()>0) {
