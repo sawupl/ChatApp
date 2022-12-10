@@ -38,10 +38,10 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull ChatAdapter.MyViewHolder holder, int position) {
-        int pikcha= chatList.get(position).getAvaResource();
+//        int pikcha= chatList.get(position).getAvaResource();
         String name = chatList.get(position).getName();
 
-        holder.ava.setImageResource(pikcha);
+//        holder.ava.setImageResource(pikcha);
         holder.nameTxt.setText(name);
 
 
