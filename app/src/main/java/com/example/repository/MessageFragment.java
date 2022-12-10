@@ -29,7 +29,7 @@ import java.util.UUID;
 public class MessageFragment extends Fragment {
         private FragmentMessageBinding binding;
         private FirebaseAuth mAuth;
-        private DatabaseReference databaseReferenceSender;//, databaseReferenceReceiver;
+        private DatabaseReference databaseReferenceSender, databaseReferenceReceiver;
         String receiverId;
         MessageAdapter messageAdapter;
         private RecyclerView recyclerView;
@@ -47,15 +47,19 @@ public class MessageFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentMessageBinding.inflate(getLayoutInflater(), container, false);
+//        if (!receiverId.equals("bot")) {
+            String receiverId = "f6x0jJ3hU6faVi5JdvC2XtL4Dm43";
+            String chatId = receiverId+mAuth.getUid();
+            databaseReferenceSender = FirebaseDatabase.getInstance().getReference("users").child(mAuth.getUid()).child("chats").child(chatId);
+            databaseReferenceReceiver = FirebaseDatabase.getInstance().getReference("users").child(receiverId).child("chats").child(chatId);
+//        }
+//        String receiverRoom = receiverId+mAuth.getUid();
 
-        String senderRoom = mAuth.getUid()+receiverId;
-        String receiverRoom = receiverId+mAuth.getUid();
+//        System.out.println(senderRoom);
+//        System.out.println(receiverRoom);
+//        System.out.println(mAuth.getCurrentUser());
+//        System.out.println(mAuth.getCurrentUser().getUid());
 
-        System.out.println(senderRoom);
-        System.out.println(receiverRoom);
-        System.out.println(mAuth.getCurrentUser());
-        System.out.println(mAuth.getCurrentUser().getUid());
-        databaseReferenceSender = FirebaseDatabase.getInstance().getReference("users").child(mAuth.getUid()).child("chats").child(senderRoom);
         //databaseReferenceReceiver = FirebaseDatabase.getInstance().getReference("users").child().child("chats").child(receiverRoom);
 
         recyclerView=binding.recycler;
@@ -65,7 +69,6 @@ public class MessageFragment extends Fragment {
 //        setMessageInfo();
 
         databaseReferenceSender.addValueEventListener(new ValueEventListener() {
-
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                     messageAdapter.clear();
@@ -80,13 +83,11 @@ public class MessageFragment extends Fragment {
 
             }
         });
-        binding.send.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String message = binding.input.getText().toString();
-                if (message.trim().length()>0) {
-                    sendMessage(message);
-                }
+        binding.send.setOnClickListener(v -> {
+            String message = binding.input.getText().toString();
+            if (message.trim().length()>0) {
+                sendMessage(message);
+                binding.input.setText("");
             }
         });
 
@@ -128,9 +129,9 @@ public class MessageFragment extends Fragment {
                 e.printStackTrace();
             }
         }
-        //databaseReferenceReceiver
-        //        .child(message_id)
-        //        .setValue(message1);
+        databaseReferenceReceiver
+                .child(String.valueOf(message1.getId()))
+                .setValue(message1);
     }
 
     private void setAdapter() {
