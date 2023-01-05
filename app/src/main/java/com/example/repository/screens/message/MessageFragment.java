@@ -129,6 +129,7 @@ public class MessageFragment extends Fragment {
                 .child(String.valueOf(message1.getId()))
                 .setValue(message1);
         if (receiverId.equals("bot")) {
+            message=message.replaceAll("\\p{Punct}", " ").replaceAll("[\\s]{2,}", " ");
             String[] words = message.split("\\s");
 
             for (String word : words) {
@@ -138,14 +139,13 @@ public class MessageFragment extends Fragment {
                             System.out.println("Error getting data");
                         } else {
                             KeyWord keyWord1 = task.getResult().getValue(KeyWord.class);
-                            if (keyWord1 != null) {
+                            if (keyWord1 != null){
                                 Message message2=new Message(System.currentTimeMillis(), "bot",keyWord1.answer);
                                 messageAdapter.add(message2);
                                 databaseReferenceSender
                                         .child(String.valueOf(message2.getId()))
                                         .setValue(message2);
                             }
-
                         }
                     });
                 } catch (Exception e) {
