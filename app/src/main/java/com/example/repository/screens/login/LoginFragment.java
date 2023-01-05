@@ -31,13 +31,17 @@ public class LoginFragment extends Fragment {
         binding.ToReg.setOnClickListener(v ->
                 Navigation.findNavController(getView()).navigate(R.id.action_loginFragment_to_registrationFragment)
         );
-        if(!binding.email.getText().toString().equals("") && !binding.password.getText().toString().equals("")){
-            binding.login.setOnClickListener(v ->
+        binding.login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!binding.email.getText().toString().equals("") && !binding.password.getText().toString().equals("")){
                     signIn(
                             binding.email.getText().toString(),
                             binding.password.getText().toString()
-                    ));
-        }
+                    );
+                }
+            }
+        });
         return binding.getRoot();
     }
     @Override

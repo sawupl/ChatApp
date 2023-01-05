@@ -31,10 +31,9 @@ public class MessageFragment extends Fragment {
         private FirebaseAuth mAuth;
         private DatabaseReference databaseReferenceSender, databaseReferenceReceiver;
         String receiverId;
-        MessageAdapter messageAdapter;
-        private RecyclerView recyclerView;
+        private MessageAdapter messageAdapter;
         private DatabaseReference mDatabase;
-        private ArrayList<Message> messageList = new ArrayList<>();
+        private ArrayList<Message> messageList;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,12 +46,15 @@ public class MessageFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentMessageBinding.inflate(getLayoutInflater(), container, false);
-//        if (!receiverId.equals("bot")) {
-            String receiverId = "GSVpkfL55OgxEiqGc3nUtnUVirq2";
-            String chatId = receiverId;
-            databaseReferenceSender = FirebaseDatabase.getInstance().getReference("users").child(mAuth.getUid()).child("chats").child(chatId);
-            databaseReferenceReceiver = FirebaseDatabase.getInstance().getReference("users").child(receiverId).child("chats").child(chatId);
-//        }
+        receiverId = getArguments().getString("receiverId");
+        setAdapter();
+        if (!receiverId.equals("bot")) {
+            databaseReferenceSender = FirebaseDatabase.getInstance().getReference("users").child(mAuth.getUid()).child("chats").child(receiverId).child("messages");
+            databaseReferenceReceiver = FirebaseDatabase.getInstance().getReference("users").child(receiverId).child("chats").child(mAuth.getUid()).child("messages");
+        }
+        else {
+            databaseReferenceSender = FirebaseDatabase.getInstance().getReference("users").child(mAuth.getUid()).child("chats").child("bot").child("messages");
+        }
 //        String receiverRoom = receiverId+mAuth.getUid();
 
 //        System.out.println(senderRoom);
@@ -62,10 +64,6 @@ public class MessageFragment extends Fragment {
 
         //databaseReferenceReceiver = FirebaseDatabase.getInstance().getReference("users").child().child("chats").child(receiverRoom);
 
-        recyclerView=binding.recycler;
-        setAdapter();
-
-        messageList= new ArrayList<>();
 //        setMessageInfo();
 
         databaseReferenceSender.addValueEventListener(new ValueEventListener() {
@@ -73,7 +71,10 @@ public class MessageFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                     messageAdapter.clear();
                 for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
-                    Message message = dataSnapshot.getValue(Message.class);
+                    Message message = new Message(
+                            Long.parseLong(dataSnapshot.getKey()),
+                            dataSnapshot.child("sender").getValue(String.class),
+                            dataSnapshot.child("text").getValue(String.class));
                     messageAdapter.add(message);
                 }
             }
@@ -84,27 +85,32 @@ public class MessageFragment extends Fragment {
             }
         });
 
-        databaseReferenceReceiver.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                messageAdapter.clear();
-                for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
-                    Message message = dataSnapshot.getValue(Message.class);
-                    messageAdapter.add(message);
+        if (databaseReferenceReceiver != null) {
+            databaseReferenceReceiver.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    messageAdapter.clear();
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                        Message message = new Message(
+                                Long.parseLong(dataSnapshot.getKey()),
+                                dataSnapshot.child("sender").getValue(String.class),
+                                dataSnapshot.child("text").getValue(String.class));
+                        messageAdapter.add(message);
+                    }
                 }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
 
-            }
-        });
+                }
+            });
+        }
 
 
         binding.send.setOnClickListener(v -> {
             String message = binding.input.getText().toString();
             if (message.trim().length()>0) {
-                sendMessage(message);
+                sendMessage(message, receiverId);
                 binding.input.setText("");
             }
         });
@@ -117,47 +123,57 @@ public class MessageFragment extends Fragment {
         return binding.getRoot();
     }
 
-    private void sendMessage(String message) {
-        Message message1 = new Message(mAuth.getCurrentUser().getEmail(), message);
-        KeyWord keyWord=new KeyWord();
-
-        messageAdapter.add(message1);
+    private void sendMessage(String message, String receiverId) {
+        Message message1 = new Message(System.currentTimeMillis(), mAuth.getCurrentUser().getEmail(), message);
         databaseReferenceSender
                 .child(String.valueOf(message1.getId()))
                 .setValue(message1);
+        if (receiverId.equals("bot")) {
+            String[] words = message.split("\\s");
 
+            for (String word : words) {
+                try {
+                    mDatabase.child("bot").child(word).get().addOnCompleteListener(task -> {
+                        if (!task.isSuccessful()) {
+                            System.out.println("Error getting data");
+                        } else {
+                            KeyWord keyWord1 = task.getResult().getValue(KeyWord.class);
+                            if (keyWord1 != null) {
+                                Message message2=new Message(System.currentTimeMillis(), "bot",keyWord1.answer);
+                                messageAdapter.add(message2);
+                                databaseReferenceSender
+                                        .child(String.valueOf(message2.getId()))
+                                        .setValue(message2);
+                            }
 
-        String[] words = message.split("\\s");
-
-        for (String word : words) {
-            try {
-                mDatabase.child("bot").child(word).get().addOnCompleteListener(task -> {
-                    if (!task.isSuccessful()) {
-                        System.out.println("Error getting data");
-                    } else {
-                        KeyWord keyWord1 = task.getResult().getValue(KeyWord.class);
-                        if (keyWord1 != null) {
-                            Message message2=new Message("bot",keyWord1.answer);
-                            messageAdapter.add(message2);
-                            databaseReferenceSender
-                                    .child(String.valueOf(message2.getId()))
-                                    .setValue(message2);
                         }
-
-                    }
-                });
-            } catch (Exception e) {
-                e.printStackTrace();
+                    });
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
-        databaseReferenceReceiver
-                .child(String.valueOf(message1.getId()))
-                .setValue(message1);
+        else {
+            databaseReferenceReceiver
+                    .child(String.valueOf(message1.getId()))
+                    .setValue(message1);
+        }
+
+
+
+//        messageAdapter.add(message1);
+
+
+
+
+
     }
 
     private void setAdapter() {
+        messageList= new ArrayList<>();
         messageAdapter =new MessageAdapter(messageList);
         RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(getContext());
+        RecyclerView recyclerView = binding.recycler;
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(messageAdapter);

@@ -11,12 +11,15 @@ import android.view.ViewGroup;
 
 import com.example.repository.R;
 import com.example.repository.databinding.FragmentRegistrationBinding;
+import com.example.repository.models.Chat;
 import com.example.repository.models.Message;
 import com.example.repository.models.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
 
 public class RegistrationFragment extends Fragment {
     private FragmentRegistrationBinding binding;
@@ -59,9 +62,12 @@ public class RegistrationFragment extends Fragment {
     }
     private void writeNewUser(String surname,String name,String userId) {
         User user = new User(name, surname);
-        Message message = new Message("bot", "Привет!");
+        Message message = new Message(System.currentTimeMillis(), "bot", "Привет!");
+        HashMap chat = new HashMap();
+        chat.put("name", "bot");
 
         mDatabase.child("users").child(userId).setValue(user);
-        mDatabase.child("users").child(userId).child("chats").child("bot").setValue(message);
+        mDatabase.child("users").child(userId).child("chats").child("bot").setValue(chat);
+//        mDatabase.child("users").child(userId).child("chats").child("bot").child("messages").setValue(message);
     }
 }

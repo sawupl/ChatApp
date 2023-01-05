@@ -56,7 +56,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHo
         Message message1= messageList.get(position);
         //int pikcha= messageList.get(position).get();
         String name = messageList.get(position).getSender();
-        String message = messageList.get(position).getMessage();
+        String message = messageList.get(position).getText();
 
         //holder.ava.setImageResource(pikcha);
         holder.nameTxt.setText(name);

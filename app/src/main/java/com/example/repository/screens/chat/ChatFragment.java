@@ -27,7 +27,6 @@ import java.util.ArrayList;
 public class ChatFragment extends Fragment {
     private FragmentChatBinding binding;
     private ArrayList<Chat> chatList;
-    private RecyclerView recyclerView;
     private FirebaseAuth mAuth;
     private ChatAdapter chatAdapter;
     DatabaseReference databaseReference;
@@ -42,7 +41,6 @@ public class ChatFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentChatBinding.inflate(getLayoutInflater(), container, false);
-        recyclerView=binding.list;
 //        Iterable<DataSnapshot> snapshot = FirebaseDatabase.getInstance().getReference("users").child(mAuth.getUid()).child("chats").get().getResult().getChildren();
 //        System.out.println(snapshot.toString()+"keyyyyyyyyyyy\n\n");
 //        if (FirebaseDatabase.getInstance().getReference("users").child(mAuth.getUid()).child("chats").getKey()) {
@@ -50,9 +48,7 @@ public class ChatFragment extends Fragment {
 //            FirebaseDatabase.getInstance().getReference("users").child(mAuth.getUid()).child("chats").setValue(chat);
 //        }
         databaseReference = FirebaseDatabase.getInstance().getReference("users").child(mAuth.getUid()).child("chats");
-
-        chatList= new ArrayList<>();
-        setMessageInfo();
+//        setMessageInfo();
         setAdapter();
         binding.backToHome.setOnClickListener(view -> {
             Navigation.findNavController(getView()).popBackStack();
@@ -64,7 +60,10 @@ public class ChatFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 chatAdapter.clear();
                 for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
-                    Chat chat = new Chat(dataSnapshot.getKey());
+//                    System.out.println(snapshot.getChildrenCount());
+//                    System.out.println(dataSnapshot.getChildrenCount());
+//                    System.out.println(dataSnapshot.child("name").getValue(String.class));
+                    Chat chat = new Chat(dataSnapshot.getKey(), dataSnapshot.child("name").getValue(String.class));
                     chatAdapter.add(chat);
                 }
             }
@@ -81,15 +80,17 @@ public class ChatFragment extends Fragment {
     }
 
     private void setAdapter() {
+        chatList= new ArrayList<>();
         chatAdapter=new ChatAdapter(chatList);
         RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(getContext());
+        RecyclerView recyclerView = binding.list;
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(chatAdapter);
     }
 
-    private void setMessageInfo() {
-        chatList.add(new Chat("Бот"));
-        chatList.add(new Chat("Служба поддержки"));
-    }
+//    private void setMessageInfo() {
+//        chatList.add(new Chat("Бот"));
+//        chatList.add(new Chat("Служба поддержки"));
+//    }
 }

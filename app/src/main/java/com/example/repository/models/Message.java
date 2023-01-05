@@ -1,11 +1,9 @@
 package com.example.repository.models;
 
-import com.google.firebase.database.ServerValue;
-
 public class Message {
-    private long id = System.currentTimeMillis();
+    private long id;
     private String sender;
-    private String message;
+    private String text;
 
 
     public long getId() {
@@ -16,9 +14,10 @@ public class Message {
         this.id = id;
     }
 
-    public Message(String sender, String message) {
+    public Message(long id, String sender, String text) {
+        this.id = id;
         this.sender = sender;
-        this.message = message;
+        this.text = text;
     }
 
     public Message() {
@@ -32,11 +31,11 @@ public class Message {
         this.sender = sender;
     }
 
-    public String getMessage() {
-        return message;
+    public String getText() {
+        return text;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setText(String text) {
+        this.text = text;
     }
 }

@@ -54,5 +54,9 @@
         android:id="@+id/messageFragment"
         android:name="com.example.repository.screens.message.MessageFragment"
         android:label="fragment_message"
-        tools:layout="@layout/fragment_message" />
+        tools:layout="@layout/fragment_message" >
+        <argument
+            android:name="receiverId"
+            app:argType="string" />
+    </fragment>
 </navigation>

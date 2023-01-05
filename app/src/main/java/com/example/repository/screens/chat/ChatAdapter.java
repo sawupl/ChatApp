@@ -1,5 +1,6 @@
 package com.example.repository.screens.chat;
 
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,8 +51,11 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyViewHolder> 
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                Navigation.findNavController(v).navigate(R.id.action_chatFragment_to_messageFragment);
+            public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                bundle.putString("receiverId", chatList.get(position).getId());
+//                bundle.putString("receiverId", "qxRD8QGg1GXIQMBFsY3VYKi5IoI3");
+                Navigation.findNavController(view).navigate(R.id.action_chatFragment_to_messageFragment, bundle);
             }
         });
     }
