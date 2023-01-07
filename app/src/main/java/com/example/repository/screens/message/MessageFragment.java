@@ -55,21 +55,11 @@ public class MessageFragment extends Fragment {
         else {
             databaseReferenceSender = FirebaseDatabase.getInstance().getReference("users").child(mAuth.getUid()).child("chats").child("bot").child("messages");
         }
-//        String receiverRoom = receiverId+mAuth.getUid();
-
-//        System.out.println(senderRoom);
-//        System.out.println(receiverRoom);
-//        System.out.println(mAuth.getCurrentUser());
-//        System.out.println(mAuth.getCurrentUser().getUid());
-
-        //databaseReferenceReceiver = FirebaseDatabase.getInstance().getReference("users").child().child("chats").child(receiverRoom);
-
-//        setMessageInfo();
 
         databaseReferenceSender.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    messageAdapter.clear();
+                messageAdapter.clear();
                 for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
                     Message message = new Message(
                             Long.parseLong(dataSnapshot.getKey()),
@@ -77,6 +67,7 @@ public class MessageFragment extends Fragment {
                             dataSnapshot.child("text").getValue(String.class));
                     messageAdapter.add(message);
                 }
+                binding.recycler.scrollToPosition(messageAdapter.getItemCount()-1);
             }
 
             @Override
@@ -106,7 +97,6 @@ public class MessageFragment extends Fragment {
             });
         }
 
-
         binding.send.setOnClickListener(v -> {
             String message = binding.input.getText().toString();
             if (message.trim().length()>0) {
@@ -117,9 +107,6 @@ public class MessageFragment extends Fragment {
         binding.back.setOnClickListener(v -> {
             Navigation.findNavController(getView()).popBackStack();
         });
-
-
-
         return binding.getRoot();
     }
 
@@ -158,15 +145,6 @@ public class MessageFragment extends Fragment {
                     .child(String.valueOf(message1.getId()))
                     .setValue(message1);
         }
-
-
-
-//        messageAdapter.add(message1);
-
-
-
-
-
     }
 
     private void setAdapter() {
@@ -178,9 +156,4 @@ public class MessageFragment extends Fragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(messageAdapter);
     }
-
-//    private void setMessageInfo() {
-//        messageList.add(new Chat("Бот",R.drawable.blackdr));
-//        messageList.add(new Chat("Служба поддержки",R.drawable.podder));
-//    }
 }
