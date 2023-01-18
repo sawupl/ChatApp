@@ -116,29 +116,7 @@ public class MessageFragment extends Fragment {
                 .child(String.valueOf(message1.getId()))
                 .setValue(message1);
         if (receiverId.equals("bot")) {
-            message=message.replaceAll("\\p{Punct}", " ").replaceAll("[\\s]{2,}", " ");
-            String[] words = message.split("\\s");
-
-            for (String word : words) {
-                try {
-                    mDatabase.child("bot").child(word).get().addOnCompleteListener(task -> {
-                        if (!task.isSuccessful()) {
-                            System.out.println("Error getting data");
-                        } else {
-                            KeyWord keyWord1 = task.getResult().getValue(KeyWord.class);
-                            if (keyWord1 != null){
-                                Message message2=new Message(System.currentTimeMillis(), "bot",keyWord1.answer);
-                                messageAdapter.add(message2);
-                                databaseReferenceSender
-                                        .child(String.valueOf(message2.getId()))
-                                        .setValue(message2);
-                            }
-                        }
-                    });
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
+            botAnswer(message);
         }
         else {
             databaseReferenceReceiver
@@ -155,5 +133,26 @@ public class MessageFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(messageAdapter);
+    }
+    private void botAnswer(String message){
+        message=message.replaceAll("\\p{Punct}", " ").replaceAll("[\\s]{2,}", " ");
+        String[] words = message.split("\\s");
+
+        for (String word : words) {
+            mDatabase.child("bot").child(word).get().addOnCompleteListener(task -> {
+                if (!task.isSuccessful()) {
+                    System.out.println("Error getting data");
+                } else {
+                    KeyWord keyWord1 = task.getResult().getValue(KeyWord.class);
+                    if (keyWord1 != null){
+                        Message message2=new Message(System.currentTimeMillis(), "bot",keyWord1.answer);
+                        messageAdapter.add(message2);
+                        databaseReferenceSender
+                                .child(String.valueOf(message2.getId()))
+                                .setValue(message2);
+                    }
+                }
+            });
+        }
     }
 }
