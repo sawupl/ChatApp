@@ -61,8 +61,7 @@ public class RegistrationFragment extends Fragment {
                 });
     }
     private void writeNewUser(String surname,String name,String userId) {
-        User user = new User(name, surname);
-        Message message = new Message(System.currentTimeMillis(), "bot", "Привет!");
+        User user = new User(name, surname,false);
         HashMap chat = new HashMap();
         chat.put("name", "bot");
 

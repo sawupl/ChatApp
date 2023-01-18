@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +18,7 @@ import android.view.ViewGroup;
 import com.example.repository.models.Message;
 import com.example.repository.databinding.FragmentMessageBinding;
 import com.example.repository.models.KeyWord;
+import com.example.repository.models.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -24,6 +27,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 
 public class MessageFragment extends Fragment {
@@ -134,10 +139,11 @@ public class MessageFragment extends Fragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(messageAdapter);
     }
+
     private void botAnswer(String message){
         message=message.replaceAll("\\p{Punct}", " ").replaceAll("[\\s]{2,}", " ");
         String[] words = message.split("\\s");
-
+        final boolean[] isAnswered = {false};
         for (String word : words) {
             mDatabase.child("bot").child(word).get().addOnCompleteListener(task -> {
                 if (!task.isSuccessful()) {
@@ -150,6 +156,39 @@ public class MessageFragment extends Fragment {
                         databaseReferenceSender
                                 .child(String.valueOf(message2.getId()))
                                 .setValue(message2);
+                        isAnswered[0] =true;
+                    }
+                    if (word.equals(words[words.length-1]) && !isAnswered[0]) {
+                        System.out.println(keyWord1);
+                        mDatabase.child("users").child(mAuth.getUid()).get().addOnCompleteListener(task2 -> {
+                            if (!task2.isSuccessful()) {
+                                System.out.println("Error getting data");
+                            }
+                            else {
+                                boolean chatWithAdmin = task2.getResult().child("chatWithAdmin").getValue(Boolean.class);
+                                if (!chatWithAdmin){
+                                    Message message2=new Message(System.currentTimeMillis(), "bot","Я не могу вам помочь, поэтому создал чат с подддержкой");
+                                    messageAdapter.add(message2);
+                                    databaseReferenceSender
+                                            .child(String.valueOf(message2.getId()))
+                                            .setValue(message2);
+                                    HashMap chat = new HashMap();
+                                    chat.put("name", "Служба поддержки");
+                                    mDatabase.child("users").child(mAuth.getUid()).child("chats").child("qxRD8QGg1GXIQMBFsY3VYKi5IoI3").setValue(chat);
+
+                                    HashMap map = new HashMap();
+                                    map.put("chatWithAdmin", true);
+                                    mDatabase.child("users").child(mAuth.getUid()).updateChildren(map);
+                                }
+                                else{
+                                    Message message2=new Message(System.currentTimeMillis(), "bot","Я не могу вам помочь, обратитесь в чат поддержки");
+                                    messageAdapter.add(message2);
+                                    databaseReferenceSender
+                                            .child(String.valueOf(message2.getId()))
+                                            .setValue(message2);
+                                }
+                            }
+                        });
                     }
                 }
             });
