@@ -166,11 +166,16 @@ public class MessageFragment extends Fragment {
                                     makeBotMessage("bot","Я не могу вам помочь, поэтому создал чат с подддержкой");
                                     HashMap chat = new HashMap();
                                     chat.put("name", "Служба поддержки");
-                                    mDatabase.child("users").child(mAuth.getUid()).child("chats").child("qxRD8QGg1GXIQMBFsY3VYKi5IoI3").setValue(chat);
+                                    mDatabase.child("users").child(mAuth.getUid()).child("chats").child("1M219cLIKqZ9AKQLCKzk3yjPL0q1").setValue(chat);
 
                                     HashMap map = new HashMap();
                                     map.put("chatWithAdmin", true);
                                     mDatabase.child("users").child(mAuth.getUid()).updateChildren(map);
+
+                                    HashMap forAdminChatName = new HashMap();
+                                    User u = task2.getResult().getValue(User.class);
+                                    forAdminChatName.put("name", u.name +" "+u.surname);
+                                    mDatabase.child("users").child("1M219cLIKqZ9AKQLCKzk3yjPL0q1").child("chats").child(mAuth.getUid()).setValue(forAdminChatName);
                                 }
                                 else{
                                     makeBotMessage("bot","Я не могу вам помочь, обратитесь в чат поддержки");

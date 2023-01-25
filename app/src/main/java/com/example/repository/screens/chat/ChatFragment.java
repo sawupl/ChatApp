@@ -88,9 +88,4 @@ public class ChatFragment extends Fragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(chatAdapter);
     }
-
-//    private void setMessageInfo() {
-//        chatList.add(new Chat("Бот"));
-//        chatList.add(new Chat("Служба поддержки"));
-//    }
 }

@@ -36,7 +36,6 @@ public class HomeFragment extends Fragment {
         binding.chatBtn.setOnClickListener(view -> {
             Navigation.findNavController(getView()).navigate(R.id.action_homeFragment_to_chatFragment);
         });
-
         return binding.getRoot();
     }
 }
