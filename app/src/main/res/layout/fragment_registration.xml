@@ -82,10 +82,10 @@
     <ImageView
         android:layout_width="580dp"
         android:layout_height="256dp"
-        android:layout_marginStart="80dp"
+        android:layout_marginEnd="-300dp"
         android:layout_marginTop="52dp"
         android:src="@drawable/monitor"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
