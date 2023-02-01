@@ -103,7 +103,7 @@ public class MessageFragment extends Fragment {
         }*/
 
         binding.send.setOnClickListener(v -> {
-            String message = binding.input.getText().toString();
+            String message = binding.input.getText().toString().replaceAll("\n", " ").replaceAll("[\\s]{2,}", " ");
             if (message.trim().length()>0) {
                 sendMessage(message, receiverId);
                 binding.input.setText("");
@@ -161,8 +161,8 @@ public class MessageFragment extends Fragment {
                                 System.out.println("Error getting data");
                             }
                             else {
-                                boolean chatWithAdmin = task2.getResult().child("chatWithAdmin").getValue(Boolean.class);
-                                if (!chatWithAdmin){
+                                User u = task2.getResult().getValue(User.class);
+                                if (!u.chatWithAdmin){
                                     makeBotMessage("bot","Я не могу вам помочь, поэтому создал чат с подддержкой");
                                     HashMap chat = new HashMap();
                                     chat.put("name", "Служба поддержки");
@@ -173,7 +173,6 @@ public class MessageFragment extends Fragment {
                                     mDatabase.child("users").child(mAuth.getUid()).updateChildren(map);
 
                                     HashMap forAdminChatName = new HashMap();
-                                    User u = task2.getResult().getValue(User.class);
                                     forAdminChatName.put("name", u.name +" "+u.surname);
                                     mDatabase.child("users").child("1M219cLIKqZ9AKQLCKzk3yjPL0q1").child("chats").child(mAuth.getUid()).setValue(forAdminChatName);
                                 }
