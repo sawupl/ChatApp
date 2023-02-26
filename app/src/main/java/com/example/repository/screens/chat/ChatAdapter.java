@@ -1,5 +1,8 @@
 package com.example.repository.screens.chat;
 
+import static java.util.Comparator.comparingLong;
+
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -74,5 +77,12 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyViewHolder> 
             chatList.clear();
             notifyDataSetChanged();
         }
+    }
+
+
+    @SuppressLint("NewApi")
+    public void sort() {
+        chatList.sort(comparingLong(Chat::getLastUpdate).reversed());
+        notifyDataSetChanged();
     }
 }

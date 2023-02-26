@@ -3,6 +3,7 @@ package com.example.repository.models;
 public class Chat {
     private String id;
     private String name;
+    private long lastUpdate;
 
     public String getId() {
         return id;
@@ -12,9 +13,10 @@ public class Chat {
         this.id = id;
     }
 
-    public Chat(String id, String name){
+    public Chat(String id, String name, long lastUpdate){
         this.id = id;
         this.name=name;
+        this.lastUpdate = lastUpdate;
     }
 
     public String getName() {
@@ -25,7 +27,15 @@ public class Chat {
         this.name = name;
     }
 
-//    public int getAvaResource() {
+    public long getLastUpdate() {
+        return lastUpdate;
+    }
+
+    public void setLastUpdate(long lastUpdate) {
+        this.lastUpdate = lastUpdate;
+    }
+
+    //    public int getAvaResource() {
 //        return avaResource;
 //    }
 //

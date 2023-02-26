@@ -63,9 +63,12 @@ public class ChatFragment extends Fragment {
 //                    System.out.println(snapshot.getChildrenCount());
 //                    System.out.println(dataSnapshot.getChildrenCount());
 //                    System.out.println(dataSnapshot.child("name").getValue(String.class));
-                    Chat chat = new Chat(dataSnapshot.getKey(), dataSnapshot.child("name").getValue(String.class));
+                    Chat chat = new Chat(dataSnapshot.getKey(),
+                            dataSnapshot.child("name").getValue(String.class),
+                            dataSnapshot.child("lastUpdate").getValue(Long.class));
                     chatAdapter.add(chat);
                 }
+                chatAdapter.sort();
             }
 
             @Override

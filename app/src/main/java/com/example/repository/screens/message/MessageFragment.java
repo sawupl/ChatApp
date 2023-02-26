@@ -39,6 +39,7 @@ public class MessageFragment extends Fragment {
         private MessageAdapter messageAdapter;
         private DatabaseReference mDatabase;
         private ArrayList<Message> messageList;
+        private  static final String ADMIN = "XWce7Ow2mshINb9jkYFu4U60Jq03";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -116,17 +117,20 @@ public class MessageFragment extends Fragment {
     }
 
     private void sendMessage(String message, String receiverId) {
-        Message message1 = new Message(System.currentTimeMillis(), mAuth.getCurrentUser().getEmail(), message);
+        Long time = System.currentTimeMillis();
+        Message message1 = new Message(time, mAuth.getCurrentUser().getEmail(), message);
         databaseReferenceSender
-                .child(String.valueOf(message1.getId()))
+                .child(String.valueOf(time))
                 .setValue(message1);
+        databaseReferenceSender.getParent().child("lastUpdate").setValue(time);
         if (receiverId.equals("bot")) {
             botAnswer(message);
         }
         else {
             databaseReferenceReceiver
-                    .child(String.valueOf(message1.getId()))
+                    .child(String.valueOf(time))
                     .setValue(message1);
+            databaseReferenceReceiver.getParent().child("lastUpdate").setValue(time);
         }
     }
 
@@ -166,7 +170,8 @@ public class MessageFragment extends Fragment {
                                     makeBotMessage("bot","Я не могу вам помочь, поэтому создал чат с подддержкой");
                                     HashMap chat = new HashMap();
                                     chat.put("name", "Служба поддержки");
-                                    mDatabase.child("users").child(mAuth.getUid()).child("chats").child("1M219cLIKqZ9AKQLCKzk3yjPL0q1").setValue(chat);
+                                    chat.put("lastUpdate", System.currentTimeMillis());
+                                    mDatabase.child("users").child(mAuth.getUid()).child("chats").child(ADMIN).setValue(chat);
 
                                     HashMap map = new HashMap();
                                     map.put("chatWithAdmin", true);
@@ -174,7 +179,8 @@ public class MessageFragment extends Fragment {
 
                                     HashMap forAdminChatName = new HashMap();
                                     forAdminChatName.put("name", u.name +" "+u.surname);
-                                    mDatabase.child("users").child("1M219cLIKqZ9AKQLCKzk3yjPL0q1").child("chats").child(mAuth.getUid()).setValue(forAdminChatName);
+                                    forAdminChatName.put("lastUpdate", System.currentTimeMillis());
+                                    mDatabase.child("users").child(ADMIN).child("chats").child(mAuth.getUid()).setValue(forAdminChatName);
                                 }
                                 else{
                                     makeBotMessage("bot","Я не могу вам помочь, обратитесь в чат поддержки");
@@ -187,10 +193,12 @@ public class MessageFragment extends Fragment {
         }
     }
     private void makeBotMessage(String who,String answer){
-        Message message2=new Message(System.currentTimeMillis(), who,answer);
+        Long time = System.currentTimeMillis();
+        Message message2=new Message(time, who,answer);
         messageAdapter.add(message2);
         databaseReferenceSender
-                .child(String.valueOf(message2.getId()))
+                .child(String.valueOf(time))
                 .setValue(message2);
+        databaseReferenceSender.getParent().child("lastUpdate").setValue(time);
     }
 }

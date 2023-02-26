@@ -64,7 +64,7 @@ public class RegistrationFragment extends Fragment {
         User user = new User(name, surname,false);
         HashMap chat = new HashMap();
         chat.put("name", "bot");
-
+        chat.put("lastUpdate", System.currentTimeMillis());
         mDatabase.child("users").child(userId).setValue(user);
         mDatabase.child("users").child(userId).child("chats").child("bot").setValue(chat);
 //        mDatabase.child("users").child(userId).child("chats").child("bot").child("messages").setValue(message);
