@@ -59,7 +59,7 @@ public class ProfileFragment extends Fragment {
         });
 
         binding.returnToM.setOnClickListener(view -> {
-            Navigation.findNavController(getView()).navigate(R.id.action_profileFragment_to_homeFragment);
+            Navigation.findNavController(getView()).navigate(R.id.action_profileFragment_to_chatFragment);
         });
 
         binding.button.setOnClickListener(view -> {

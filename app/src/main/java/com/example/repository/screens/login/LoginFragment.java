@@ -31,15 +31,12 @@ public class LoginFragment extends Fragment {
         binding.ToReg.setOnClickListener(v ->
                 Navigation.findNavController(getView()).navigate(R.id.action_loginFragment_to_registrationFragment)
         );
-        binding.login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!binding.email.getText().toString().equals("") && !binding.password.getText().toString().equals("")){
-                    signIn(
-                            binding.email.getText().toString(),
-                            binding.password.getText().toString()
-                    );
-                }
+        binding.login.setOnClickListener(view -> {
+            if (!binding.email.getText().toString().equals("") && !binding.password.getText().toString().equals("")){
+                signIn(
+                        binding.email.getText().toString(),
+                        binding.password.getText().toString()
+                );
             }
         });
         return binding.getRoot();
@@ -49,7 +46,7 @@ public class LoginFragment extends Fragment {
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null){
-            Navigation.findNavController(getView()).navigate(R.id.action_loginFragment_to_homeFragment);
+            Navigation.findNavController(getView()).navigate(R.id.action_loginFragment_to_chatFragment);
         }
     }
 
@@ -58,7 +55,7 @@ public class LoginFragment extends Fragment {
                 .addOnCompleteListener(requireActivity(), task -> {
                     if (task.isSuccessful()) {
                         System.out.println("log in success");
-                        Navigation.findNavController(getView()).navigate(R.id.action_loginFragment_to_homeFragment);
+                        Navigation.findNavController(getView()).navigate(R.id.action_loginFragment_to_chatFragment);
                     } else {
                         System.out.println("log in failure");
                     }

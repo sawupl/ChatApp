@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.repository.R;
 import com.example.repository.databinding.FragmentChatBinding;
 import com.example.repository.models.Chat;
 import com.google.firebase.auth.FirebaseAuth;
@@ -50,10 +51,13 @@ public class ChatFragment extends Fragment {
         databaseReference = FirebaseDatabase.getInstance().getReference("users").child(mAuth.getUid()).child("chats");
 //        setMessageInfo();
         setAdapter();
-        binding.backToHome.setOnClickListener(view -> {
-            Navigation.findNavController(getView()).popBackStack();
+        binding.exitAcc.setOnClickListener(view -> {
+            mAuth.signOut();
+            Navigation.findNavController(getView()).navigate(R.id.action_chatFragment_to_loginFragment);
         });
-
+        binding.toProfile.setOnClickListener(view -> {
+            Navigation.findNavController(getView()).navigate(R.id.action_chatFragment_to_profileFragment);
+        });
 
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override

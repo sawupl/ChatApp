@@ -54,7 +54,7 @@ public class RegistrationFragment extends Fragment {
                         FirebaseUser user = mAuth.getCurrentUser();
                         writeNewUser(binding.surname.getText().toString(),binding.name.getText().toString(), user.getUid());
                         System.out.println("user created");
-                        Navigation.findNavController(getView()).navigate(R.id.action_registrationFragment_to_homeFragment);
+                        Navigation.findNavController(getView()).navigate(R.id.action_registrationFragment_to_chatFragment);
                     } else {
                         System.out.println("user didn't create");
                     }
