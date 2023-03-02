@@ -4,6 +4,7 @@ import static android.app.Activity.RESULT_OK;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -25,6 +26,8 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
 
 public class ProfileFragment extends Fragment {
 
@@ -51,6 +54,20 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentProfileBinding.inflate(getLayoutInflater(), container, false);
 
+        try {
+            File localFile = File.createTempFile("tempfile",".jpg");
+            storageRef.getFile(localFile)
+                    .addOnSuccessListener(taskSnapshot -> {
+                        Bitmap bitmap= BitmapFactory.decodeFile(localFile.getAbsolutePath());
+                        binding.imageView.setImageBitmap(bitmap);
+                    }).addOnFailureListener(e -> {
+
+                    });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
         binding.select.setOnClickListener(view -> {
                 Intent i = new Intent();
                 i.setType("image/*");
@@ -62,6 +79,11 @@ public class ProfileFragment extends Fragment {
             Navigation.findNavController(getView()).navigate(R.id.action_profileFragment_to_chatFragment);
         });
 
+
+
+
+
+        //Picasso.get().load("gs://xakaton-f1696.appspot.com/icons/"+mAuth.getUid()+"/icon.jpg").into(binding.imageView);
         binding.button.setOnClickListener(view -> {
             binding.imageView.setDrawingCacheEnabled(true);
             binding.imageView.buildDrawingCache();
