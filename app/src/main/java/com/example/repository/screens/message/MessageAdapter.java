@@ -25,16 +25,16 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHo
 
     private FirebaseStorage storage;
     private StorageReference storageRef;
-    private ArrayList<Message> messageList;
-    private FirebaseAuth mAuth;
+    private final ArrayList<Message> messageList;
 
     public MessageAdapter(ArrayList<Message> messageList){
         this.messageList =messageList;
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
-        private TextView nameTxt,message;
-        private ImageView ava;
+        private final TextView nameTxt;
+        private final TextView message;
+        private final ImageView ava;
         public MyViewHolder(final View view){
             super(view);
             nameTxt=view.findViewById(R.id.name);
@@ -65,7 +65,6 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHo
     @Override
     public void onBindViewHolder(@NonNull MessageAdapter.MyViewHolder holder, int position) {
 
-        mAuth=FirebaseAuth.getInstance();
         storage = FirebaseStorage.getInstance();
         storageRef = storage.getReference().child(messageList.get(position).getLinkAvatar());
 
@@ -82,12 +81,10 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHo
             e.printStackTrace();
         }
 
-        //Message message1= messageList.get(position);
         String name = messageList.get(position).getSender();
         String message = messageList.get(position).getText();
 
         holder.nameTxt.setText(name);
-
         holder.message.setText(message);
 
         //if(message1.getSender().equals(FirebaseAuth.getInstance().getUid())){
