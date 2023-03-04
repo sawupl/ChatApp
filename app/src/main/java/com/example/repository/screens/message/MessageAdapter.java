@@ -1,5 +1,7 @@
 package com.example.repository.screens.message;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,12 +13,21 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.repository.models.Message;
 import com.example.repository.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHolder> {
 
+    private FirebaseStorage storage;
+    private StorageReference storageRef;
     private ArrayList<Message> messageList;
+    private FirebaseAuth mAuth;
+
     public MessageAdapter(ArrayList<Message> messageList){
         this.messageList =messageList;
     }
@@ -53,13 +64,30 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHo
 
     @Override
     public void onBindViewHolder(@NonNull MessageAdapter.MyViewHolder holder, int position) {
-        Message message1= messageList.get(position);
-        //int pikcha= messageList.get(position).get();
+
+        mAuth=FirebaseAuth.getInstance();
+        storage = FirebaseStorage.getInstance();
+        storageRef = storage.getReference().child(messageList.get(position).getLinkAvatar());
+
+        try {
+            File localFile = File.createTempFile("tempfile",".jpg");
+            storageRef.getFile(localFile)
+                    .addOnSuccessListener(taskSnapshot -> {
+                        Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
+                        holder.ava.setImageBitmap(bitmap);
+                    }).addOnFailureListener(e -> {
+
+                    });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        //Message message1= messageList.get(position);
         String name = messageList.get(position).getSender();
         String message = messageList.get(position).getText();
 
-        //holder.ava.setImageResource(pikcha);
         holder.nameTxt.setText(name);
+
         holder.message.setText(message);
 
         //if(message1.getSender().equals(FirebaseAuth.getInstance().getUid())){

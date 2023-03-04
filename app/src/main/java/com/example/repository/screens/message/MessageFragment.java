@@ -70,7 +70,8 @@ public class MessageFragment extends Fragment {
                     Message message = new Message(
                             Long.parseLong(dataSnapshot.getKey()),
                             dataSnapshot.child("sender").getValue(String.class),
-                            dataSnapshot.child("text").getValue(String.class));
+                            dataSnapshot.child("text").getValue(String.class),
+                            dataSnapshot.child("linkAvatar").getValue(String.class));
                     messageAdapter.add(message);
                 }
                 binding.recycler.scrollToPosition(messageAdapter.getItemCount()-1);
@@ -118,7 +119,7 @@ public class MessageFragment extends Fragment {
 
     private void sendMessage(String message, String receiverId) {
         Long time = System.currentTimeMillis();
-        Message message1 = new Message(time, mAuth.getCurrentUser().getEmail(), message);
+        Message message1 = new Message(time, mAuth.getCurrentUser().getEmail(), message,"icons/"+ mAuth.getUid() +"/icon.jpg");
         databaseReferenceSender
                 .child(String.valueOf(time))
                 .setValue(message1);
@@ -155,7 +156,7 @@ public class MessageFragment extends Fragment {
                 } else {
                     KeyWord keyWord1 = task.getResult().getValue(KeyWord.class);
                     if (keyWord1 != null){
-                        makeBotMessage("bot",keyWord1.answer);
+                        makeBotMessage("bot",keyWord1.answer,"icons/"+ mAuth.getUid() +"/icon.jpg");
                         isAnswered[0] =true;
                     }
                     if (word.equals(words[words.length-1]) && !isAnswered[0]) {
@@ -167,7 +168,7 @@ public class MessageFragment extends Fragment {
                             else {
                                 User u = task2.getResult().getValue(User.class);
                                 if (!u.chatWithAdmin){
-                                    makeBotMessage("bot","Я не могу вам помочь, поэтому создал чат с подддержкой");
+                                    makeBotMessage("bot","Я не могу вам помочь, поэтому создал чат с подддержкой","icons/"+ mAuth.getUid() +"/icon.jpg");
                                     HashMap chat = new HashMap();
                                     chat.put("name", "Служба поддержки");
                                     chat.put("lastUpdate", System.currentTimeMillis());
@@ -183,7 +184,7 @@ public class MessageFragment extends Fragment {
                                     mDatabase.child("users").child(ADMIN).child("chats").child(mAuth.getUid()).setValue(forAdminChatName);
                                 }
                                 else{
-                                    makeBotMessage("bot","Я не могу вам помочь, обратитесь в чат поддержки");
+                                    makeBotMessage("bot","Я не могу вам помочь, обратитесь в чат поддержки","icons/"+ mAuth.getUid() +"/icon.jpg");
                                 }
                             }
                         });
@@ -192,9 +193,9 @@ public class MessageFragment extends Fragment {
             });
         }
     }
-    private void makeBotMessage(String who,String answer){
+    private void makeBotMessage(String who,String answer,String f){
         Long time = System.currentTimeMillis();
-        Message message2=new Message(time, who,answer);
+        Message message2=new Message(time, who,answer,f);
         messageAdapter.add(message2);
         databaseReferenceSender
                 .child(String.valueOf(time))

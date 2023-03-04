@@ -4,7 +4,7 @@ public class Message {
     private long id;
     private String sender;
     private String text;
-
+    private String linkAvatar;
 
     public long getId() {
         return id;
@@ -14,13 +14,22 @@ public class Message {
         this.id = id;
     }
 
-    public Message(long id, String sender, String text) {
+    public Message(long id, String sender, String text,String linkAvatar) {
         this.id = id;
         this.sender = sender;
         this.text = text;
+        this.linkAvatar=linkAvatar;
     }
 
     public Message() {
+    }
+
+    public String getLinkAvatar() {
+        return linkAvatar;
+    }
+
+    public void setLinkAvatar(String linkAvatar) {
+        this.linkAvatar = linkAvatar;
     }
 
     public String getSender() {

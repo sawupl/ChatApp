@@ -58,7 +58,7 @@ public class ProfileFragment extends Fragment {
             File localFile = File.createTempFile("tempfile",".jpg");
             storageRef.getFile(localFile)
                     .addOnSuccessListener(taskSnapshot -> {
-                        Bitmap bitmap= BitmapFactory.decodeFile(localFile.getAbsolutePath());
+                        Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
                         binding.imageView.setImageBitmap(bitmap);
                     }).addOnFailureListener(e -> {
 
