@@ -3,6 +3,8 @@ package com.example.repository.screens.chat;
 import static java.util.Comparator.comparingLong;
 
 import android.annotation.SuppressLint;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,11 +18,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.repository.R;
 import com.example.repository.models.Chat;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyViewHolder> {
 
+    private FirebaseStorage storage;
+    private StorageReference storageRef;
     private ArrayList<Chat> chatList;
     public ChatAdapter(ArrayList<Chat> chatList){
         this.chatList=chatList;
@@ -45,20 +52,29 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull ChatAdapter.MyViewHolder holder, int position) {
-//        int pikcha=userList.get(position).getAvaResource();
-        String name = chatList.get(position).getName();
+        storage = FirebaseStorage.getInstance();
+        storageRef = storage.getReference().child("icons/"+ chatList.get(position).getId() +"/icon.jpg");
 
-//        holder.ava.setImageResource(pikcha);
+        String name = chatList.get(position).getName();
         holder.nameTxt.setText(name);
 
+        try {
+            File localFile = File.createTempFile("tempfile",".jpg");
+            storageRef.getFile(localFile)
+                    .addOnSuccessListener(taskSnapshot -> {
+                        Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
+                        holder.ava.setImageBitmap(bitmap);
+                    }).addOnFailureListener(e -> {
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Bundle bundle = new Bundle();
-                bundle.putString("receiverId", chatList.get(position).getId());
-                Navigation.findNavController(view).navigate(R.id.action_chatFragment_to_messageFragment, bundle);
-            }
+                    });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        holder.itemView.setOnClickListener(view -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("receiverId", chatList.get(position).getId());
+            Navigation.findNavController(view).navigate(R.id.action_chatFragment_to_messageFragment, bundle);
         });
     }
 
@@ -78,7 +94,6 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyViewHolder> 
             notifyDataSetChanged();
         }
     }
-
 
     @SuppressLint("NewApi")
     public void sort() {
