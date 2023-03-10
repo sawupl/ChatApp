@@ -68,7 +68,6 @@ public class MessageFragment extends Fragment {
                 messageAdapter.clear();
                 for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
                     Message message = new Message(
-                            Long.parseLong(dataSnapshot.getKey()),
                             dataSnapshot.child("sender").getValue(String.class),
                             dataSnapshot.child("text").getValue(String.class),
                             dataSnapshot.child("linkAvatar").getValue(String.class));
@@ -119,7 +118,7 @@ public class MessageFragment extends Fragment {
 
     private void sendMessage(String message, String receiverId) {
         Long time = System.currentTimeMillis();
-        Message message1 = new Message(time, mAuth.getCurrentUser().getEmail(), message,"icons/"+ mAuth.getUid() +"/icon.jpg");
+        Message message1 = new Message(mAuth.getCurrentUser().getEmail(), message,"icons/"+ mAuth.getUid() +"/icon.jpg");
         databaseReferenceSender
                 .child(String.valueOf(time))
                 .setValue(message1);
@@ -195,7 +194,7 @@ public class MessageFragment extends Fragment {
     }
     private void makeBotMessage(String who,String answer,String f){
         Long time = System.currentTimeMillis();
-        Message message2=new Message(time, who,answer,f);
+        Message message2=new Message(who,answer,f);
         messageAdapter.add(message2);
         databaseReferenceSender
                 .child(String.valueOf(time))

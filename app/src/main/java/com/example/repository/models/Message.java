@@ -1,21 +1,12 @@
 package com.example.repository.models;
 
 public class Message {
-    private long id;
     private String sender;
     private String text;
     private String linkAvatar;
 
-    public long getId() {
-        return id;
-    }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public Message(long id, String sender, String text,String linkAvatar) {
-        this.id = id;
+    public Message(String sender, String text,String linkAvatar) {
         this.sender = sender;
         this.text = text;
         this.linkAvatar=linkAvatar;
