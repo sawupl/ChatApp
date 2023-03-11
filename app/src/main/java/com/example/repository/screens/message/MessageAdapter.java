@@ -11,14 +11,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.repository.models.Message;
 import com.example.repository.R;
-import com.google.firebase.auth.FirebaseAuth;
+import com.example.repository.models.Message;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHolder> {
@@ -34,12 +32,12 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHo
     public class MyViewHolder extends RecyclerView.ViewHolder{
         private final TextView nameTxt;
         private final TextView message;
-        private final ImageView ava;
+        private final ImageView icon;
         public MyViewHolder(final View view){
             super(view);
             nameTxt=view.findViewById(R.id.name);
             message=view.findViewById(R.id.mess);
-            ava=view.findViewById(R.id.ava);
+            icon =view.findViewById(R.id.icon);
         }
     }
 
@@ -73,7 +71,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHo
             storageRef.getFile(localFile)
                     .addOnSuccessListener(taskSnapshot -> {
                         Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
-                        holder.ava.setImageBitmap(bitmap);
+                        holder.icon.setImageBitmap(bitmap);
                     }).addOnFailureListener(e -> {
 
                     });

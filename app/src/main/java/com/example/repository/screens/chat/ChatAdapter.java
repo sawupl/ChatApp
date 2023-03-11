@@ -39,7 +39,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyViewHolder> 
         public MyViewHolder(final View view){
             super(view);
             nameTxt=view.findViewById(R.id.name);
-            ava=view.findViewById(R.id.ava);
+            ava=view.findViewById(R.id.icon);
         }
     }
 

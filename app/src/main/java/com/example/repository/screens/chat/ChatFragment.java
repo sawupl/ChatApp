@@ -64,9 +64,6 @@ public class ChatFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 chatAdapter.clear();
                 for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
-//                    System.out.println(snapshot.getChildrenCount());
-//                    System.out.println(dataSnapshot.getChildrenCount());
-//                    System.out.println(dataSnapshot.child("name").getValue(String.class));
                     Chat chat = new Chat(dataSnapshot.getKey(),
                             dataSnapshot.child("name").getValue(String.class),
                             dataSnapshot.child("lastUpdate").getValue(Long.class));

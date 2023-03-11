@@ -9,15 +9,12 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.text.SpannableString;
-import android.text.Spanned;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.repository.models.Message;
 import com.example.repository.databinding.FragmentMessageBinding;
-import com.example.repository.models.KeyWord;
 import com.example.repository.models.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -28,7 +25,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 
 public class MessageFragment extends Fragment {
@@ -54,13 +50,9 @@ public class MessageFragment extends Fragment {
         binding = FragmentMessageBinding.inflate(getLayoutInflater(), container, false);
         receiverId = getArguments().getString("receiverId");
         setAdapter();
-        if (!receiverId.equals("bot")) {
-            databaseReferenceSender = FirebaseDatabase.getInstance().getReference("users").child(mAuth.getUid()).child("chats").child(receiverId).child("messages");
-            databaseReferenceReceiver = FirebaseDatabase.getInstance().getReference("users").child(receiverId).child("chats").child(mAuth.getUid()).child("messages");
-        }
-        else {
-            databaseReferenceSender = FirebaseDatabase.getInstance().getReference("users").child(mAuth.getUid()).child("chats").child("bot").child("messages");
-        }
+
+        databaseReferenceSender = FirebaseDatabase.getInstance().getReference("users").child(mAuth.getUid()).child("chats").child(receiverId).child("messages");
+        databaseReferenceReceiver = FirebaseDatabase.getInstance().getReference("users").child(receiverId).child("chats").child(mAuth.getUid()).child("messages");
 
         databaseReferenceSender.addValueEventListener(new ValueEventListener() {
             @Override
@@ -123,15 +115,10 @@ public class MessageFragment extends Fragment {
                 .child(String.valueOf(time))
                 .setValue(message1);
         databaseReferenceSender.getParent().child("lastUpdate").setValue(time);
-        if (receiverId.equals("bot")) {
-            botAnswer(message);
-        }
-        else {
-            databaseReferenceReceiver
-                    .child(String.valueOf(time))
-                    .setValue(message1);
-            databaseReferenceReceiver.getParent().child("lastUpdate").setValue(time);
-        }
+        databaseReferenceReceiver
+                .child(String.valueOf(time))
+                .setValue(message1);
+        databaseReferenceReceiver.getParent().child("lastUpdate").setValue(time);
     }
 
     private void setAdapter() {
@@ -142,63 +129,5 @@ public class MessageFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(messageAdapter);
-    }
-
-    private void botAnswer(String message){
-        message=message.replaceAll("\\p{Punct}", " ").replaceAll("[\\s]{2,}", " ");
-        String[] words = message.split("\\s");
-        final boolean[] isAnswered = {false};
-        for (String word : words) {
-            mDatabase.child("bot").child(word).get().addOnCompleteListener(task -> {
-                if (!task.isSuccessful()) {
-                    System.out.println("Error getting data");
-                } else {
-                    KeyWord keyWord1 = task.getResult().getValue(KeyWord.class);
-                    if (keyWord1 != null){
-                        makeBotMessage("bot",keyWord1.answer,"icons/"+ mAuth.getUid() +"/icon.jpg");
-                        isAnswered[0] =true;
-                    }
-                    if (word.equals(words[words.length-1]) && !isAnswered[0]) {
-                        System.out.println(keyWord1);
-                        mDatabase.child("users").child(mAuth.getUid()).get().addOnCompleteListener(task2 -> {
-                            if (!task2.isSuccessful()) {
-                                System.out.println("Error getting data");
-                            }
-                            else {
-                                User u = task2.getResult().getValue(User.class);
-                                if (!u.chatWithAdmin){
-                                    makeBotMessage("bot","Я не могу вам помочь, поэтому создал чат с подддержкой","icons/"+ mAuth.getUid() +"/icon.jpg");
-                                    HashMap chat = new HashMap();
-                                    chat.put("name", "Служба поддержки");
-                                    chat.put("lastUpdate", System.currentTimeMillis());
-                                    mDatabase.child("users").child(mAuth.getUid()).child("chats").child(ADMIN).setValue(chat);
-
-                                    HashMap map = new HashMap();
-                                    map.put("chatWithAdmin", true);
-                                    mDatabase.child("users").child(mAuth.getUid()).updateChildren(map);
-
-                                    HashMap forAdminChatName = new HashMap();
-                                    forAdminChatName.put("name", u.name +" "+u.surname);
-                                    forAdminChatName.put("lastUpdate", System.currentTimeMillis());
-                                    mDatabase.child("users").child(ADMIN).child("chats").child(mAuth.getUid()).setValue(forAdminChatName);
-                                }
-                                else{
-                                    makeBotMessage("bot","Я не могу вам помочь, обратитесь в чат поддержки","icons/"+ mAuth.getUid() +"/icon.jpg");
-                                }
-                            }
-                        });
-                    }
-                }
-            });
-        }
-    }
-    private void makeBotMessage(String who,String answer,String f){
-        Long time = System.currentTimeMillis();
-        Message message2=new Message(who,answer,f);
-        messageAdapter.add(message2);
-        databaseReferenceSender
-                .child(String.valueOf(time))
-                .setValue(message2);
-        databaseReferenceSender.getParent().child("lastUpdate").setValue(time);
     }
 }
