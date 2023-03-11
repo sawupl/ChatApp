@@ -54,7 +54,6 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyViewHolder> 
     public void onBindViewHolder(@NonNull ChatAdapter.MyViewHolder holder, int position) {
         storage = FirebaseStorage.getInstance();
         storageRef = storage.getReference().child("icons/"+ chatList.get(position).getId() +"/icon.jpg");
-
         String name = chatList.get(position).getName();
         holder.nameTxt.setText(name);
 
@@ -65,7 +64,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyViewHolder> 
                         Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
                         holder.ava.setImageBitmap(bitmap);
                     }).addOnFailureListener(e -> {
-
+                        holder.ava.setImageResource(R.drawable.face);
                     });
         } catch (Exception e) {
             e.printStackTrace();

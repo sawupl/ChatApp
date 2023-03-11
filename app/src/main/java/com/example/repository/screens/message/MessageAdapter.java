@@ -73,7 +73,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHo
                         Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
                         holder.icon.setImageBitmap(bitmap);
                     }).addOnFailureListener(e -> {
-
+                        holder.icon.setImageResource(R.drawable.face);
                     });
         } catch (Exception e) {
             e.printStackTrace();
