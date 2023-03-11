@@ -64,7 +64,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHo
     public void onBindViewHolder(@NonNull MessageAdapter.MyViewHolder holder, int position) {
 
         storage = FirebaseStorage.getInstance();
-        storageRef = storage.getReference().child(messageList.get(position).getLinkAvatar());
+        storageRef = storage.getReference().child("icons/"+ messageList.get(position).getSender() +"/icon.jpg");
 
         try {
             File localFile = File.createTempFile("tempfile",".jpg");

@@ -3,24 +3,13 @@ package com.example.repository.models;
 public class Message {
     private String sender;
     private String text;
-    private String linkAvatar;
 
-
-    public Message(String sender, String text,String linkAvatar) {
+    public Message(String sender, String text) {
         this.sender = sender;
         this.text = text;
-        this.linkAvatar=linkAvatar;
     }
 
     public Message() {
-    }
-
-    public String getLinkAvatar() {
-        return linkAvatar;
-    }
-
-    public void setLinkAvatar(String linkAvatar) {
-        this.linkAvatar = linkAvatar;
     }
 
     public String getSender() {

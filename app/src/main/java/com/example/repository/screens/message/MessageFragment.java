@@ -61,8 +61,7 @@ public class MessageFragment extends Fragment {
                 for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
                     Message message = new Message(
                             dataSnapshot.child("sender").getValue(String.class),
-                            dataSnapshot.child("text").getValue(String.class),
-                            dataSnapshot.child("linkAvatar").getValue(String.class));
+                            dataSnapshot.child("text").getValue(String.class));
                     messageAdapter.add(message);
                 }
                 binding.recycler.scrollToPosition(messageAdapter.getItemCount()-1);
@@ -110,7 +109,7 @@ public class MessageFragment extends Fragment {
 
     private void sendMessage(String message, String receiverId) {
         Long time = System.currentTimeMillis();
-        Message message1 = new Message(mAuth.getCurrentUser().getEmail(), message,"icons/"+ mAuth.getUid() +"/icon.jpg");
+        Message message1 = new Message(mAuth.getCurrentUser().getUid(), message);
         databaseReferenceSender
                 .child(String.valueOf(time))
                 .setValue(message1);
