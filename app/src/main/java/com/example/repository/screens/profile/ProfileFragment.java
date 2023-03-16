@@ -21,9 +21,15 @@ import com.example.repository.databinding.FragmentProfileBinding;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -33,9 +39,8 @@ public class ProfileFragment extends Fragment {
 
     private FragmentProfileBinding binding;
     private FirebaseAuth mAuth;
-    private FirebaseStorage storage;
-    private StorageReference storageRef;
-    private int SELECT_PICTURE=200;
+    private static  final int SELECT_PICTURE=200;
+    private StorageReference path;
     public ProfileFragment() {
 
     }
@@ -44,9 +49,7 @@ public class ProfileFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mAuth=FirebaseAuth.getInstance();
-        storage = FirebaseStorage.getInstance();
-        storageRef = storage.getReference().child("icons/"+ mAuth.getUid() +"/icon.jpg");
-
+        path = FirebaseStorage.getInstance().getReference().child("icons/"+ mAuth.getUid()+"/icon.jpg");
     }
 
     @Override
@@ -54,19 +57,15 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentProfileBinding.inflate(getLayoutInflater(), container, false);
 
-        try {
-            File localFile = File.createTempFile("tempfile",".jpg");
-            storageRef.getFile(localFile)
-                    .addOnSuccessListener(taskSnapshot -> {
-                        Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
-                        binding.imageView.setImageBitmap(bitmap);
-                    }).addOnFailureListener(e -> {
-
-                    });
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        path.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Picasso.get()
+                        .load(uri.toString())
+                        .placeholder(R.drawable.face)
+                        .into(binding.imageView);
+            }
+        });
 
         binding.select.setOnClickListener(view -> {
                 Intent i = new Intent();
@@ -79,46 +78,37 @@ public class ProfileFragment extends Fragment {
             Navigation.findNavController(getView()).navigate(R.id.action_profileFragment_to_chatFragment);
         });
 
-
-
-
-
-        //Picasso.get().load("gs://xakaton-f1696.appspot.com/icons/"+mAuth.getUid()+"/icon.jpg").into(binding.imageView);
-        binding.button.setOnClickListener(view -> {
-            binding.imageView.setDrawingCacheEnabled(true);
-            binding.imageView.buildDrawingCache();
-            Bitmap bitmap = ((BitmapDrawable) binding.imageView.getDrawable()).getBitmap();
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-            byte[] data = baos.toByteArray();
-
-            UploadTask uploadTask = storageRef.putBytes(data);
-            uploadTask.addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception exception) {
-                    // Handle unsuccessful uploads
-                }
-            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    System.out.println("----------------------------------------------------");
-                }
-            });
-        });
         return binding.getRoot();
     }
+
+
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == RESULT_OK) {
-            // compare the resultCode with the
-            // SELECT_PICTURE constant
             if (requestCode == SELECT_PICTURE) {
-                // Get the url of the image from data
                 Uri selectedImageUri = data.getData();
-                if (null != selectedImageUri) {
-                    // update the preview image in the layout
-                    binding.imageView.setImageURI(selectedImageUri);
+                if (selectedImageUri != null) {
+                    path.putFile(selectedImageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            path.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    Picasso.get()
+                                            .load(uri.toString())
+                                            .placeholder(R.drawable.face)
+                                            .into(binding.imageView);
+                                }
+                            });
+
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            System.out.println(e.getMessage());
+                        }
+                    });
                 }
             }
         }

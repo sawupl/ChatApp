@@ -3,8 +3,7 @@ package com.example.repository.screens.chat;
 import static java.util.Comparator.comparingLong;
 
 import android.annotation.SuppressLint;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,16 +17,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.repository.R;
 import com.example.repository.models.Chat;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
-import java.io.File;
 import java.util.ArrayList;
 
 public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyViewHolder> {
 
-    private FirebaseStorage storage;
-    private StorageReference storageRef;
+    private StorageReference path;
     private ArrayList<Chat> chatList;
     public ChatAdapter(ArrayList<Chat> chatList){
         this.chatList=chatList;
@@ -35,11 +35,11 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyViewHolder> 
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
         private TextView nameTxt;
-        private ImageView ava;
+        private ImageView icon;
         public MyViewHolder(final View view){
             super(view);
             nameTxt=view.findViewById(R.id.name);
-            ava=view.findViewById(R.id.icon);
+            icon =view.findViewById(R.id.icon);
         }
     }
 
@@ -52,23 +52,25 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull ChatAdapter.MyViewHolder holder, int position) {
-        storage = FirebaseStorage.getInstance();
-        storageRef = storage.getReference().child("icons/"+ chatList.get(position).getId() +"/icon.jpg");
+        path = FirebaseStorage.getInstance().getReference().child("icons/"+ chatList.get(position).getId() +"/icon.jpg");
         String name = chatList.get(position).getName();
         holder.nameTxt.setText(name);
 
-        try {
-            File localFile = File.createTempFile("tempfile",".jpg");
-            storageRef.getFile(localFile)
-                    .addOnSuccessListener(taskSnapshot -> {
-                        Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
-                        holder.ava.setImageBitmap(bitmap);
-                    }).addOnFailureListener(e -> {
-                        holder.ava.setImageResource(R.drawable.face);
-                    });
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
+        path.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Picasso.get()
+                        .load(uri.toString())
+                        .placeholder(R.drawable.face)
+                        .into(holder.icon);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                holder.icon.setImageResource(R.drawable.face);
+            }
+        });
 
         holder.itemView.setOnClickListener(view -> {
             Bundle bundle = new Bundle();

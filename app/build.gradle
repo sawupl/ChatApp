@@ -53,4 +53,6 @@ dependencies {
     implementation 'com.google.firebase:firebase-storage:20.1.0'
     //circle images
     implementation 'de.hdodenhof:circleimageview:3.1.0'
+    // picasso
+    implementation 'com.squareup.picasso:picasso:2.8'
 }

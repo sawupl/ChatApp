@@ -1,7 +1,6 @@
 package com.example.repository.screens.message;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,16 +12,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.repository.R;
 import com.example.repository.models.Message;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
-import java.io.File;
 import java.util.ArrayList;
 
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHolder> {
 
-    private FirebaseStorage storage;
-    private StorageReference storageRef;
+    private StorageReference path;
     private final ArrayList<Message> messageList;
 
     public MessageAdapter(ArrayList<Message> messageList){
@@ -62,22 +62,22 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHo
 
     @Override
     public void onBindViewHolder(@NonNull MessageAdapter.MyViewHolder holder, int position) {
+        path = FirebaseStorage.getInstance().getReference().child("icons/"+ messageList.get(position).getSender() +"/icon.jpg");
 
-        storage = FirebaseStorage.getInstance();
-        storageRef = storage.getReference().child("icons/"+ messageList.get(position).getSender() +"/icon.jpg");
-
-        try {
-            File localFile = File.createTempFile("tempfile",".jpg");
-            storageRef.getFile(localFile)
-                    .addOnSuccessListener(taskSnapshot -> {
-                        Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
-                        holder.icon.setImageBitmap(bitmap);
-                    }).addOnFailureListener(e -> {
-                        holder.icon.setImageResource(R.drawable.face);
-                    });
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        path.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Picasso.get()
+                        .load(uri.toString())
+                        .placeholder(R.drawable.face)
+                        .into(holder.icon);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                holder.icon.setImageResource(R.drawable.face);
+            }
+        });
 
         String name = messageList.get(position).getSender();
         String message = messageList.get(position).getText();
