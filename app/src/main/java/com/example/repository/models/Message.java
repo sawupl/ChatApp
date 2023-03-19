@@ -1,15 +1,25 @@
 package com.example.repository.models;
 
 public class Message {
+    private String id;
     private String sender;
     private String text;
 
-    public Message(String sender, String text) {
+    public Message(String id, String sender, String text) {
+        this.id = id;
         this.sender = sender;
         this.text = text;
     }
 
     public Message() {
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getSender() {

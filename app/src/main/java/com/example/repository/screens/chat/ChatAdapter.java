@@ -63,6 +63,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyViewHolder> 
                 Picasso.get()
                         .load(uri.toString())
                         .placeholder(R.drawable.face)
+                        .error(R.drawable.face)
                         .into(holder.icon);
             }
         }).addOnFailureListener(new OnFailureListener() {

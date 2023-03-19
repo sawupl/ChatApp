@@ -63,6 +63,7 @@ public class ProfileFragment extends Fragment {
                 Picasso.get()
                         .load(uri.toString())
                         .placeholder(R.drawable.face)
+                        .error(R.drawable.face)
                         .into(binding.imageView);
             }
         });

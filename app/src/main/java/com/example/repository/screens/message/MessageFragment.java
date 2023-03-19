@@ -3,6 +3,7 @@ package com.example.repository.screens.message;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -17,6 +18,7 @@ import com.example.repository.models.Message;
 import com.example.repository.databinding.FragmentMessageBinding;
 import com.example.repository.models.User;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -54,16 +56,61 @@ public class MessageFragment extends Fragment {
         databaseReferenceSender = FirebaseDatabase.getInstance().getReference("users").child(mAuth.getUid()).child("chats").child(receiverId).child("messages");
         databaseReferenceReceiver = FirebaseDatabase.getInstance().getReference("users").child(receiverId).child("chats").child(mAuth.getUid()).child("messages");
 
+//        databaseReferenceSender.addChildEventListener(new ChildEventListener() {
+//            @Override
+//            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+//                Message message = new Message(
+//                        snapshot.child("id").getValue(String.class),
+//                        snapshot.child("sender").getValue(String.class),
+//                        snapshot.child("text").getValue(String.class));
+//                messageAdapter.add(message);
+//                System.out.println("Update message " + message.getText());
+//                binding.recycler.scrollToPosition(messageAdapter.getItemCount()-1);
+//                System.out.println("onChildAdded");
+//            }
+//
+//            @Override
+//            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+//                System.out.println("onChildChanged");
+//                System.out.println(snapshot.child("id").getValue(String.class) + "\n" +
+//                        snapshot.child("text").getValue(String.class) + "\n" +
+//                        snapshot.child("sender").getValue(String.class) + "\n");
+//            }
+//
+//            @Override
+//            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+//                System.out.println("onChildRemoved");
+//                System.out.println(snapshot.child("id").getValue(String.class) + "\n" +
+//                snapshot.child("text").getValue(String.class) + "\n" +
+//                snapshot.child("sender").getValue(String.class) + "\n");
+//            }
+//
+//            @Override
+//            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+//                System.out.println("onChildMoved");
+//                System.out.println(snapshot.child("id").getValue(String.class) + "\n" +
+//                        snapshot.child("text").getValue(String.class) + "\n" +
+//                        snapshot.child("sender").getValue(String.class) + "\n");
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//                System.out.println("onCancelled");
+//            }
+//        });
+
         databaseReferenceSender.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                messageAdapter.clear();
+                ArrayList<Message> messages = new ArrayList<Message>();
                 for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
                     Message message = new Message(
+                            dataSnapshot.child("id").getValue(String.class),
                             dataSnapshot.child("sender").getValue(String.class),
                             dataSnapshot.child("text").getValue(String.class));
-                    messageAdapter.add(message);
+                    messages.add(message);
                 }
+                messageAdapter.setList(messages);
                 binding.recycler.scrollToPosition(messageAdapter.getItemCount()-1);
             }
 
@@ -72,27 +119,6 @@ public class MessageFragment extends Fragment {
 
             }
         });
-
-        /*if (databaseReferenceReceiver != null) {
-            databaseReferenceReceiver.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    messageAdapter.clear();
-                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        Message message = new Message(
-                                Long.parseLong(dataSnapshot.getKey()),
-                                dataSnapshot.child("sender").getValue(String.class),
-                                dataSnapshot.child("text").getValue(String.class));
-                        messageAdapter.add(message);
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-        }*/
 
         binding.send.setOnClickListener(v -> {
             String message = binding.input.getText().toString().replaceAll("\n", " ").replaceAll("[\\s]{2,}", " ");
@@ -109,7 +135,7 @@ public class MessageFragment extends Fragment {
 
     private void sendMessage(String message, String receiverId) {
         Long time = System.currentTimeMillis();
-        Message message1 = new Message(mAuth.getCurrentUser().getUid(), message);
+        Message message1 = new Message(time.toString(), mAuth.getCurrentUser().getUid(), message);
         databaseReferenceSender
                 .child(String.valueOf(time))
                 .setValue(message1);
