@@ -55,7 +55,21 @@ public class MessageFragment extends Fragment {
 
         databaseReferenceSender = FirebaseDatabase.getInstance().getReference("users").child(mAuth.getUid()).child("chats").child(receiverId).child("messages");
         databaseReferenceReceiver = FirebaseDatabase.getInstance().getReference("users").child(receiverId).child("chats").child(mAuth.getUid()).child("messages");
+        mDatabase.child("users").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot:snapshot.getChildren()) {
+                    System.out.println(dataSnapshot.getKey());
+                    System.out.println(dataSnapshot.child("name").getValue(String.class));
+                    System.out.println(dataSnapshot.child("surname").getValue(String.class));
+                }
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 //        databaseReferenceSender.addChildEventListener(new ChildEventListener() {
 //            @Override
 //            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
