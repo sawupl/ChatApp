@@ -61,7 +61,6 @@ public class MessageFragment extends Fragment {
                 for (DataSnapshot dataSnapshot:snapshot.getChildren()) {
                     System.out.println(dataSnapshot.getKey());
                     System.out.println(dataSnapshot.child("name").getValue(String.class));
-                    System.out.println(dataSnapshot.child("surname").getValue(String.class));
                 }
             }
 

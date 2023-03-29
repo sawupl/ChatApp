@@ -93,8 +93,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHo
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String name = snapshot.child("name").getValue(String.class);
-                String surname = snapshot.child("surname").getValue(String.class);
-                holder.nameTxt.setText(name + " " + surname);
+                holder.nameTxt.setText(name);
             }
 
             @Override

@@ -5,11 +5,11 @@ import com.google.firebase.database.IgnoreExtraProperties;
 @IgnoreExtraProperties
 public class User {
 
-    public String surname;
+    public String login;
     public String name;
 
-    public User(String surname,String name) {
-        this.surname = surname;
+    public User(String login,String name) {
+        this.login = login;
         this.name=name;
     }
     public User(){
