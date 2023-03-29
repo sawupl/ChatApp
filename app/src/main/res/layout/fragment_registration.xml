@@ -60,7 +60,7 @@
         android:textColor="@color/white"
         android:textColorHint="@color/whitepros"
         android:textSize="22sp"
-        app:layout_constraintBottom_toTopOf="@+id/surname"
+        app:layout_constraintBottom_toTopOf="@+id/login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
