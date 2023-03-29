@@ -59,6 +59,9 @@ public class ChatFragment extends Fragment {
             Navigation.findNavController(getView()).navigate(R.id.action_chatFragment_to_profileFragment);
         });
 
+        binding.toSearch.setOnClickListener(v ->
+                Navigation.findNavController(getView()).navigate(R.id.action_chatFragment_to_searchFragment));
+
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
