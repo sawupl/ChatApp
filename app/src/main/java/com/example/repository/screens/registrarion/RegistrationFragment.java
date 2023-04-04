@@ -46,6 +46,7 @@ public class RegistrationFragment extends Fragment {
     private void registration(String email, String password) {
         boolean f = checkLogin(binding.login.getText().toString());
         if (f){
+            System.out.println("ЛОгин свободен");
             mAuth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(requireActivity(), task -> {
                         if (task.isSuccessful()) {
@@ -60,7 +61,7 @@ public class RegistrationFragment extends Fragment {
                     });
         }
         else{
-
+            System.out.println("ЛОгин занят");
         }
     }
     private void writeNewUser(String login,String name,String userId) {
@@ -68,14 +69,13 @@ public class RegistrationFragment extends Fragment {
         mDatabase.child("users").child(userId).setValue(user);
     }
 
-    private Boolean checkLogin(String login) {
-        return mDatabase.child("users").orderByChild("login").equalTo(login).limitToFirst(1).get().getResult().getValue() == null;
-        /*mDatabase.child("users").orderByChild("login").equalTo(login).limitToFirst(1).get().addOnCompleteListener(dataSnapshot -> {
-            System.out.println(dataSnapshot.getResult().getKey());
-            for (DataSnapshot data: dataSnapshot.getResult().getChildren()) {
-                System.out.println(data.getKey());
-            }
-        });*/
+    private Boolean checkLogin(String login){
+        final boolean[] check = {false};
+        mDatabase.child("users").orderByChild("login").equalTo(login).limitToFirst(1).get().addOnSuccessListener(dataSnapshot -> {
+            check[0] =true;
+        });
+        return check[0];
+    }
 //                for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
 //                    String login_search = dataSnapshot.getValue(String.class);
 //                    if (login_search.equals(login)) {
@@ -91,5 +91,4 @@ public class RegistrationFragment extends Fragment {
 //                    }
 //                }
 //            }
-    }
 }
