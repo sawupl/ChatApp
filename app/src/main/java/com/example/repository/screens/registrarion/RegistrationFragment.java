@@ -71,19 +71,4 @@ public class RegistrationFragment extends Fragment {
         User user = new User(name, login);
         mDatabase.child("users").child(userId).setValue(user);
     }
-//                for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
-//                    String login_search = dataSnapshot.getValue(String.class);
-//                    if (login_search.equals(login)) {
-//                        To
-//                    }
-//                }
-//                if (snapshot == null) {
-//                    System.out.println("not found 1");
-//                }
-//                else {
-//                    for (DataSnapshot data: snapshot.getChildren()) {
-//                        System.out.println(data.getKey());
-//                    }
-//                }
-//            }
 }
