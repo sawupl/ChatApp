@@ -42,14 +42,7 @@ public class ChatFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentChatBinding.inflate(getLayoutInflater(), container, false);
-//        Iterable<DataSnapshot> snapshot = FirebaseDatabase.getInstance().getReference("users").child(mAuth.getUid()).child("chats").get().getResult().getChildren();
-//        System.out.println(snapshot.toString()+"keyyyyyyyyyyy\n\n");
-//        if (FirebaseDatabase.getInstance().getReference("users").child(mAuth.getUid()).child("chats").getKey()) {
-//            Chat chat = new Chat("bot");
-//            FirebaseDatabase.getInstance().getReference("users").child(mAuth.getUid()).child("chats").setValue(chat);
-//        }
         databaseReference = FirebaseDatabase.getInstance().getReference("users").child(mAuth.getUid()).child("chats");
-//        setMessageInfo();
         setAdapter();
         binding.exitAcc.setOnClickListener(view -> {
             mAuth.signOut();

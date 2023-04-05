@@ -35,46 +35,41 @@ public class RegistrationFragment extends Fragment {
         binding.reg.setOnClickListener(v ->
                 registration(
                         binding.email.getText().toString(),
-                        binding.password.getText().toString())
-        );
+                        binding.password.getText().toString(),
+                        binding.login.getText().toString()
+        ));
 
         binding.backToSignin.setOnClickListener(v ->
                 Navigation.findNavController(getView()).popBackStack()
         );
         return binding.getRoot();
     }
-    private void registration(String email, String password) {
-        boolean f = checkLogin(binding.login.getText().toString());
-        if (f){
-            System.out.println("ЛОгин свободен");
-            mAuth.createUserWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(requireActivity(), task -> {
-                        if (task.isSuccessful()) {
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            writeNewUser(binding.login.getText().toString(),binding.name.getText().toString(), user.getUid());
-                            System.out.println("user created");
-                            Navigation.findNavController(getView()).navigate(R.id.action_registrationFragment_to_chatFragment);
-                        }
-                        else {
-                            System.out.println("user didn't create");
-                        }
-                    });
-        }
-        else{
-            System.out.println("ЛОгин занят");
-        }
+    private void registration(String email, String password,String login) {
+        final boolean[] check = {false};
+        mDatabase.child("users").orderByChild("login").equalTo(login).limitToFirst(1).get().addOnSuccessListener(dataSnapshot -> {
+            if (dataSnapshot.getValue()==null){
+                check[0] =true;
+                mAuth.createUserWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(requireActivity(), task -> {
+                            if (task.isSuccessful()) {
+                                FirebaseUser user = mAuth.getCurrentUser();
+                                writeNewUser(binding.login.getText().toString(),binding.name.getText().toString(), user.getUid());
+                                System.out.println("user created");
+                                Navigation.findNavController(getView()).navigate(R.id.action_registrationFragment_to_chatFragment);
+                            }
+                            else {
+                                System.out.println("user didn't create");
+                            }
+                        });
+            }
+            else{
+                System.out.println("Занят");
+            }
+        });
     }
     private void writeNewUser(String login,String name,String userId) {
         User user = new User(name, login);
         mDatabase.child("users").child(userId).setValue(user);
-    }
-
-    private Boolean checkLogin(String login){
-        final boolean[] check = {false};
-        mDatabase.child("users").orderByChild("login").equalTo(login).limitToFirst(1).get().addOnSuccessListener(dataSnapshot -> {
-            check[0] =true;
-        });
-        return check[0];
     }
 //                for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
 //                    String login_search = dataSnapshot.getValue(String.class);
