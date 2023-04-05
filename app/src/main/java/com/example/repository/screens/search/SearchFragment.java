@@ -28,15 +28,6 @@ public class SearchFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding.apply.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                if (binding.search.getText().toString() != null) {
-//
-//                }
-            }
-        });
-        // Inflate the layout for this fragment
         binding = FragmentSearchBinding.inflate(getLayoutInflater(), container, false);
         binding.search.addTextChangedListener(new TextWatcher() {
             @Override
