@@ -37,7 +37,6 @@ public class MessageFragment extends Fragment {
         private MessageAdapter messageAdapter;
         private DatabaseReference mDatabase;
         private ArrayList<Message> messageList;
-        private  static final String ADMIN = "XWce7Ow2mshINb9jkYFu4U60Jq03";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

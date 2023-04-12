@@ -11,13 +11,17 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.repository.databinding.FragmentSearchBinding;
+import com.example.repository.models.User;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
 
 public class SearchFragment extends Fragment {
     private FragmentSearchBinding binding;
     private DatabaseReference mDatabase;
-
+    private ArrayList<User> UserList=new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,13 +48,14 @@ public class SearchFragment extends Fragment {
             public void afterTextChanged(Editable e) {
                 String query = e.toString();
                 mDatabase.child("users").orderByChild("login").startAt(query).endAt(query + "\uf8ff").limitToFirst(10).get().addOnSuccessListener(dataSnapshot -> {
-                    System.out.println(dataSnapshot.getValue());
+                    UserList.clear();
+                    for (DataSnapshot dataSnapshot2:dataSnapshot.getChildren()) {
+                        User user=new User(dataSnapshot2.child("name").getValue(String.class),dataSnapshot2.child("login").getValue(String.class));
+                        UserList.add(user);
+                    }
                 });
             }
         });
         return binding.getRoot();
-
-
-
     }
 }
