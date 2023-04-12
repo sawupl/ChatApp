@@ -60,9 +60,13 @@ public class ChatFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 chatAdapter.clear();
                 for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
+                    Long lastUpdate = dataSnapshot.child("lastUpdate").getValue(Long.class);
+                    if (lastUpdate == null) {
+                        lastUpdate = 0L;
+                    }
                     Chat chat = new Chat(dataSnapshot.getKey(),
                             dataSnapshot.child("name").getValue(String.class),
-                            dataSnapshot.child("lastUpdate").getValue(Long.class));
+                            lastUpdate);
                     chatAdapter.add(chat);
                 }
                 chatAdapter.sort();
