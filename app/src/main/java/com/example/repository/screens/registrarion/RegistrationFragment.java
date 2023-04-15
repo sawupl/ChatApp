@@ -8,6 +8,7 @@ import androidx.navigation.Navigation;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.repository.R;
 import com.example.repository.databinding.FragmentRegistrationBinding;
@@ -32,12 +33,29 @@ public class RegistrationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentRegistrationBinding.inflate(getLayoutInflater(), container, false);
-        binding.reg.setOnClickListener(v ->
-                registration(
-                        binding.email.getText().toString(),
-                        binding.password.getText().toString(),
-                        binding.login.getText().toString()
-        ));
+        binding.reg.setOnClickListener(view -> {
+            if (binding.email.getText().length() == 0 || binding.password.getText().length() == 0 || binding.login.getText().length() == 0 || binding.name.getText().length() == 0) {
+                Toast toast = Toast.makeText(getContext(),"Заполнены не все поля",Toast.LENGTH_SHORT);
+                toast.show();
+            }
+            else{
+                if(binding.login.getText().length()<5){
+                    Toast toast = Toast.makeText(getContext(),"Логин должен быть длиннее 4 символов",Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+                else{
+                    if (binding.login.getText().length()<7){
+                        Toast toast = Toast.makeText(getContext(),"Пароль должен быть длиннее 6 символов",Toast.LENGTH_SHORT);
+                        toast.show();
+                    }
+                    else{
+                        registration(binding.email.getText().toString(),
+                                binding.password.getText().toString(),
+                                binding.login.getText().toString());
+                    }
+                }
+            }
+        });
 
         binding.backToSignin.setOnClickListener(v ->
                 Navigation.findNavController(getView()).popBackStack()
@@ -49,21 +67,21 @@ public class RegistrationFragment extends Fragment {
         mDatabase.child("users").orderByChild("login").equalTo(login).limitToFirst(1).get().addOnSuccessListener(dataSnapshot -> {
             if (dataSnapshot.getValue()==null){
                 check[0] =true;
-                mAuth.createUserWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(requireActivity(), task -> {
-                            if (task.isSuccessful()) {
-                                FirebaseUser user = mAuth.getCurrentUser();
-                                writeNewUser(binding.login.getText().toString().toLowerCase(),binding.name.getText().toString(), user.getUid());
-                                System.out.println("user created");
-                                Navigation.findNavController(getView()).navigate(R.id.action_registrationFragment_to_chatFragment);
-                            }
-                            else {
-                                System.out.println("user didn't create");
-                            }
-                        });
+                mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(requireActivity(), task -> {
+                    if (task.isSuccessful()) {
+                        FirebaseUser user = mAuth.getCurrentUser();
+                        writeNewUser(binding.login.getText().toString().toLowerCase(),binding.name.getText().toString(), user.getUid());
+                        Navigation.findNavController(getView()).navigate(R.id.action_registrationFragment_to_chatFragment);
+                    }
+                    else {
+                        Toast toast = Toast.makeText(getContext(),"Почта занята",Toast.LENGTH_SHORT);
+                        toast.show();
+                    }
+                });
             }
             else{
-                System.out.println("Занят");
+                Toast toast = Toast.makeText(getContext(),"Логин занят",Toast.LENGTH_SHORT);
+                toast.show();
             }
         });
     }

@@ -8,6 +8,7 @@ import androidx.navigation.Navigation;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.repository.R;
 import com.example.repository.databinding.FragmentLoginBinding;
@@ -51,14 +52,13 @@ public class LoginFragment extends Fragment {
     }
 
     private void signIn(String email, String password) {
-        mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(requireActivity(), task -> {
-                    if (task.isSuccessful()) {
-                        System.out.println("log in success");
-                        Navigation.findNavController(getView()).navigate(R.id.action_loginFragment_to_chatFragment);
-                    } else {
-                        System.out.println("log in failure");
-                    }
-                });
+        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(requireActivity(), task -> {
+            if (task.isSuccessful()) {
+                Navigation.findNavController(getView()).navigate(R.id.action_loginFragment_to_chatFragment);
+            } else {
+                Toast toast = Toast.makeText(getContext(),"Ошибка в почте или пароле",Toast.LENGTH_SHORT);
+                toast.show();
+            }
+        });
     }
 }

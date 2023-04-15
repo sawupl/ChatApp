@@ -3,6 +3,7 @@ package com.example.repository.screens.search;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.repository.R;
 import com.example.repository.databinding.FragmentSearchBinding;
 import com.example.repository.models.User;
 import com.example.repository.screens.chat.ChatAdapter;
@@ -39,6 +41,9 @@ public class SearchFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentSearchBinding.inflate(getLayoutInflater(), container, false);
         setAdapter();
+        binding.backToMen.setOnClickListener(view -> {
+            Navigation.findNavController(getView()).popBackStack();
+        });
         binding.search.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -75,7 +80,6 @@ public class SearchFragment extends Fragment {
         searchAdapter =new SearchAdapter(userList);
         RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(getContext());
         RecyclerView recyclerView = binding.usersList;
-        System.out.println(recyclerView);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(searchAdapter);

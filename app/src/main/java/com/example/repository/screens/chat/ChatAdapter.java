@@ -56,17 +56,11 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyViewHolder> 
         String name = chatList.get(position).getName();
         holder.nameTxt.setText(name);
 
-
-        path.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                Picasso.get()
-                        .load(uri.toString())
-                        .placeholder(R.drawable.face)
-                        .error(R.drawable.face)
-                        .into(holder.icon);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
+        path.getDownloadUrl().addOnSuccessListener(uri -> Picasso.get()
+                .load(uri.toString())
+                .placeholder(R.drawable.face)
+                .error(R.drawable.face)
+                .into(holder.icon)).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
                 holder.icon.setImageResource(R.drawable.face);

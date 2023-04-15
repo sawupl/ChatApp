@@ -75,5 +75,8 @@
         <argument
             android:name="receiverId"
             app:argType="string" />
+        <action
+            android:id="@+id/action_searchFragment_to_chatFragment"
+            app:destination="@id/chatFragment" />
     </fragment>
 </navigation>
