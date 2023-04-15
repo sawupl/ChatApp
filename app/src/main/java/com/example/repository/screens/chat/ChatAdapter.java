@@ -19,6 +19,11 @@ import com.example.repository.R;
 import com.example.repository.models.Chat;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
@@ -29,6 +34,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyViewHolder> 
 
     private StorageReference path;
     private ArrayList<Chat> chatList;
+    private DatabaseReference databaseReference;
     public ChatAdapter(ArrayList<Chat> chatList){
         this.chatList=chatList;
     }
@@ -52,9 +58,22 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull ChatAdapter.MyViewHolder holder, int position) {
+        String id = chatList.get(position).getId();
         path = FirebaseStorage.getInstance().getReference().child("icons/"+ chatList.get(position).getId() +"/icon.jpg");
-        String name = chatList.get(position).getName();
-        holder.nameTxt.setText(name);
+        databaseReference = FirebaseDatabase.getInstance().getReference("users").child(id);
+
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String name = snapshot.child("name").getValue(String.class);
+                holder.nameTxt.setText(name);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         path.getDownloadUrl().addOnSuccessListener(uri -> Picasso.get()
                 .load(uri.toString())

@@ -30,7 +30,7 @@ public class ChatFragment extends Fragment {
     private ArrayList<Chat> chatList;
     private FirebaseAuth mAuth;
     private ChatAdapter chatAdapter;
-    DatabaseReference databaseReference;
+    private DatabaseReference databaseReference;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

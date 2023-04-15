@@ -18,22 +18,26 @@ import com.example.repository.R;
 import com.example.repository.databinding.FragmentSearchBinding;
 import com.example.repository.models.User;
 import com.example.repository.screens.chat.ChatAdapter;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class SearchFragment extends Fragment {
     private FragmentSearchBinding binding;
     private DatabaseReference mDatabase;
     private ArrayList<User> userList;
     private SearchAdapter searchAdapter;
+    private FirebaseAuth mAuth;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mDatabase = FirebaseDatabase.getInstance().getReference();
+        mAuth = FirebaseAuth.getInstance();
     }
 
     @Override
@@ -58,12 +62,16 @@ public class SearchFragment extends Fragment {
             @Override
             public void afterTextChanged(Editable e) {
                 String query = e.toString();
-                if (query.length()>4) {
+                if (!query.isEmpty()) {
                     mDatabase.child("users").orderByChild("login").startAt(query).endAt(query + "\uf8ff").limitToFirst(10).get().addOnSuccessListener(dataSnapshot -> {
                         searchAdapter.clear();
                         for (DataSnapshot dataSnapshot2 : dataSnapshot.getChildren()) {
-                            User user = new User(dataSnapshot2.getKey(), dataSnapshot2.child("name").getValue(String.class), dataSnapshot2.child("login").getValue(String.class));
-                            searchAdapter.add(user);
+                            String id =dataSnapshot2.getKey();
+                            if (!id.equals(mAuth.getUid())) {
+                                User user = new User(id, dataSnapshot2.child("name").getValue(String.class), dataSnapshot2.child("login").getValue(String.class));
+                                searchAdapter.add(user);
+                            }
+
                         }
                     });
                 }
