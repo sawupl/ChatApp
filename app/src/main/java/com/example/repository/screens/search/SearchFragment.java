@@ -58,7 +58,7 @@ public class SearchFragment extends Fragment {
             @Override
             public void afterTextChanged(Editable e) {
                 String query = e.toString();
-                if (!query.isEmpty()) {
+                if (query.length()>4) {
                     mDatabase.child("users").orderByChild("login").startAt(query).endAt(query + "\uf8ff").limitToFirst(10).get().addOnSuccessListener(dataSnapshot -> {
                         searchAdapter.clear();
                         for (DataSnapshot dataSnapshot2 : dataSnapshot.getChildren()) {

@@ -44,8 +44,8 @@ public class RegistrationFragment extends Fragment {
                     toast.show();
                 }
                 else{
-                    if (binding.login.getText().length()<7){
-                        Toast toast = Toast.makeText(getContext(),"Пароль должен быть длиннее 6 символов",Toast.LENGTH_SHORT);
+                    if (binding.password.getText().length()<6){
+                        Toast toast = Toast.makeText(getContext(),"Пароль должен быть длиннее 5 символов",Toast.LENGTH_SHORT);
                         toast.show();
                     }
                     else{
