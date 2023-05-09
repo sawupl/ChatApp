@@ -1,5 +1,6 @@
 package com.example.repository.screens.message;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -27,7 +28,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
 
 public class MessageFragment extends Fragment {
         private FragmentMessageBinding binding;
